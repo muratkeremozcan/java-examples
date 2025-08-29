@@ -2,6 +2,10 @@ plugins {
 	id 'java'
 }
 
+
+
+
+
 group = 'local.quickstart'
 version = '0.0.1'
 
