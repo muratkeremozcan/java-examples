@@ -1,0 +1,131 @@
+plugins {
+	id 'java'
+}
+
+group = 'local.quickstart'
+version = '0.0.1'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+// Handle nested folders under src/ - automatically finds all .java files
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src']
+			// Include all .java files in src/ and subdirectories
+			include '**/*.java'
+		}
+	}
+}
+
+// Run any example by full class name (including folder path)
+tasks.register('runExample', {
+	group = 'application'
+	description = 'Run any example (e.g., ./gradlew -PclassName=example.lesson02.Hello runExample)'
+	doLast {
+		def className = project.findProperty('className') ?: 'intro.lesson01.WelcomeToJava'
+		println "Running: $className"
+		javaexec {
+			classpath = sourceSets.main.runtimeClasspath
+			mainClass = className
+		}
+	}
+})
+
+// List all available examples with their folder structure
+tasks.register('listExamples') {
+	group = 'help'
+	description = 'Show all available example classes with their folder structure'
+	doLast {
+		sourceSets.main.java.files.each { file ->
+			if (file.name.endsWith('.java')) {
+				// Get relative path from src/ to show folder structure
+				def relativePath = file.path.substring(file.path.indexOf('src/') + 4)
+				def className = relativePath.replaceAll('\\.java$', '').replaceAll('/', '.')
+				println "Available: $className (in $relativePath)"
+			}
+		}
+	}
+}
+
+// Quick run without package complexity
+tasks.register('quickRun') {
+	group = 'application'
+	description = 'Quick compile and run (requires: ./gradlew -PclassName=ClassName quickRun)'
+	doLast {
+		def className = project.findProperty('className')
+		if (!className) {
+			throw new GradleException("Please specify className: ./gradlew -PclassName=YourClass quickRun")
+		}
+		ant.mkdir(dir: "$buildDir/tmp")
+		ant.javac(srcdir: 'src', destdir: "$buildDir/tmp", includeantruntime: false)
+		javaexec {
+			classpath = files("$buildDir/tmp")
+			mainClass = className
+		}
+	}
+}
+
+// Simple run by folder/filename (no packages needed)
+tasks.register('runSimple', {
+	group = 'application'
+	description = 'Run example by folder/filename (e.g., ./gradlew -Pexample=01_intro/WelcomeToJava runSimple)'
+	doLast {
+		def example = project.findProperty('example')
+		if (!example) {
+			throw new GradleException("Please specify example: ./gradlew -Pexample=folder/filename runSimple")
+		}
+		
+		// Extract folder and filename
+		def parts = example.split('/')
+		if (parts.length != 2) {
+			throw new GradleException("Use format: folder/filename (e.g., 01_intro/WelcomeToJava)")
+		}
+		
+		def folder = parts[0]
+		def filename = parts[1]
+		def sourceFile = "src/${folder}/${filename}.java"
+		
+		if (!file(sourceFile).exists()) {
+			throw new GradleException("File not found: $sourceFile")
+		}
+		
+		println "Running: $sourceFile"
+		
+		// Compile and run without packages
+		ant.mkdir(dir: "$buildDir/tmp")
+		ant.javac(srcdir: 'src', destdir: "$buildDir/tmp", includeantruntime: false)
+		
+		// Extract class name from filename
+		def className = filename.replaceAll('\\.java$', '')
+		
+		javaexec {
+			classpath = files("$buildDir/tmp")
+			mainClass = className
+		}
+	}
+})
+
+// List examples in a simpler format
+tasks.register('listSimple') {
+	group = 'help'
+	description = 'List examples in folder/filename format'
+	doLast {
+		sourceSets.main.java.files.each { file ->
+			if (file.name.endsWith('.java')) {
+				def relativePath = file.path.substring(file.path.indexOf('src/') + 4)
+				def folder = relativePath.substring(0, relativePath.lastIndexOf('/'))
+				def filename = relativePath.substring(relativePath.lastIndexOf('/') + 1)
+				println "Available: $folder/$filename"
+			}
+		}
+	}
+}
