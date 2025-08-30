@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<ruleset name="Custom Rules"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>Custom PMD ruleset for Java learning examples</description>
+
+    <!-- Best Practices -->
+    <rule ref="category/java/bestpractices.xml">
+        <!-- Allow System.out.println for learning examples -->
+        <exclude name="SystemPrintln"/>
+        <!-- Allow public main methods -->
+        <exclude name="UseVarargs"/>
+    </rule>
+
+    <!-- Code Style -->
+    <rule ref="category/java/codestyle.xml">
+        <!-- Allow short variable names for simple examples -->
+        <exclude name="ShortVariable"/>
+        <exclude name="LongVariable"/>
+        <!-- Allow class naming without package prefix -->
+        <exclude name="ClassNamingConventions"/>
+        <!-- Allow single character variable names in loops -->
+        <exclude name="LocalVariableNamingConventions"/>
+        <!-- Allow classes without package declarations for learning examples -->
+        <exclude name="NoPackage"/>
+    </rule>
+
+    <!-- Design -->
+    <rule ref="category/java/design.xml">
+        <!-- Allow simple classes without complex design patterns -->
+        <exclude name="UseUtilityClass"/>
+        <!-- Allow cyclomatic complexity for learning examples -->
+        <exclude name="CyclomaticComplexity"/>
+    </rule>
+
+    <!-- Error Prone -->
+    <rule ref="category/java/errorprone.xml">
+        <!-- Allow empty catch blocks for simple examples -->
+        <exclude name="EmptyCatchBlock"/>
+    </rule>
+
+    <!-- Performance -->
+    <rule ref="category/java/performance.xml"/>
+
+    <!-- Security -->
+    <rule ref="category/java/security.xml"/>
+
+</ruleset>
