@@ -1,5 +1,9 @@
 plugins {
 	id 'java'
+	id 'checkstyle'
+	id 'pmd'
+	id 'com.github.spotbugs' version '6.0.24'
+	id 'jacoco'
 }
 
 
@@ -17,6 +21,51 @@ java {
 
 repositories {
 	mavenCentral()
+}
+
+// Code quality and linting configuration
+checkstyle {
+	toolVersion = '10.12.4'
+	configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+	ignoreFailures = false
+	maxWarnings = 0
+}
+
+pmd {
+	toolVersion = '7.0.0'
+	ignoreFailures = false
+	ruleSets = []
+	ruleSetFiles = files("${rootDir}/config/pmd/pmd-ruleset.xml")
+}
+
+spotbugs {
+	toolVersion = '4.8.6'
+	ignoreFailures = false
+	effort = 'max'
+	reportLevel = 'medium'
+}
+
+jacoco {
+	toolVersion = '0.8.11'
+}
+
+// Configure quality checks to apply to all source files
+checkstyleMain {
+	source = fileTree('src') {
+		include '**/*.java'
+	}
+}
+
+pmdMain {
+	source = fileTree('src') {
+		include '**/*.java'
+	}
+}
+
+spotbugsMain {
+	source = fileTree('src') {
+		include '**/*.java'
+	}
 }
 
 // Handle nested folders under src/ - automatically finds all .java files
@@ -132,4 +181,28 @@ tasks.register('listSimple') {
 			}
 		}
 	}
+}
+
+// Convenience tasks for code quality
+tasks.register('lint') {
+	group = 'verification'
+	description = 'Run all linting and code quality checks'
+	dependsOn 'checkstyleMain', 'pmdMain', 'spotbugsMain'
+}
+
+tasks.register('format') {
+	group = 'formatting'
+	description = 'Format code using Google Java Format (install separately)'
+	doLast {
+		println "To format code, install Google Java Format:"
+		println "brew install google-java-format"
+		println "Then run: find src -name '*.java' | xargs google-java-format --replace"
+	}
+}
+
+// Task to run all checks before committing
+tasks.register('preCommit') {
+	group = 'verification'
+	description = 'Run all checks before committing code'
+	dependsOn 'build', 'lint', 'test'
 }

@@ -1,6 +1,6 @@
 class WelcomeToJava {
 
-    public static void main(String[] args) {
+    public static void ain(String[] args) {
     
     	System.out.println("Welcome to Introduction to Java!");
     }
