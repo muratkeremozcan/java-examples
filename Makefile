@@ -1,6 +1,6 @@
 SHELL := /bin/zsh
 
-.PHONY: dev build test package clean health stop
+.PHONY: dev build test package clean health stop lint format precommit
 
 dev:
 	./gradlew bootRun
@@ -16,6 +16,15 @@ package:
 
 clean:
 	./gradlew clean
+
+lint:
+	./gradlew lint
+
+format:
+	./gradlew format
+
+precommit:
+	./gradlew preCommit
 
 health:
 	curl -fsS http://localhost:8080/actuator/health || true

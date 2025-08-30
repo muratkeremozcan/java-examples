@@ -1,5 +1,9 @@
 plugins {
 	id 'java'
+	id 'checkstyle'
+	id 'pmd'
+	id 'com.github.spotbugs' version '6.0.24'
+	id 'jacoco'
 }
 
 
@@ -18,6 +22,58 @@ java {
 repositories {
 	mavenCentral()
 }
+
+// Configuration for Google Java Format
+configurations {
+	googleJavaFormat
+}
+
+dependencies {
+	googleJavaFormat 'com.google.googlejavaformat:google-java-format:1.24.0'
+}
+
+// Code quality and linting configuration
+checkstyle {
+	toolVersion = '10.17.0'  // Latest stable version
+	// Use built-in Google Java Style (no custom config file needed!)
+	configFile = resources.text.fromUri("https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-10.17.0/src/main/resources/google_checks.xml").asFile()
+	ignoreFailures = false
+	maxWarnings = 5
+}
+
+pmd {
+	toolVersion = '7.0.0'
+	ignoreFailures = false
+	ruleSets = []
+	ruleSetFiles = files("${rootDir}/config/pmd/pmd-ruleset.xml")
+}
+
+spotbugs {
+	toolVersion = '4.8.6'
+	ignoreFailures = false
+	effort = com.github.spotbugs.snom.Effort.valueOf('MAX')
+	reportLevel = com.github.spotbugs.snom.Confidence.valueOf('MEDIUM')
+}
+
+jacoco {
+	toolVersion = '0.8.11'
+}
+
+// Configure quality checks to apply to all source files
+checkstyleMain {
+	source = fileTree('src') {
+		include '**/*.java'
+	}
+}
+
+pmdMain {
+	source = fileTree('src') {
+		include '**/*.java'
+	}
+}
+
+// SpotBugs will automatically find classes from sourceSets.main
+// No additional configuration needed for simple projects
 
 // Handle nested folders under src/ - automatically finds all .java files
 sourceSets {
@@ -132,4 +188,51 @@ tasks.register('listSimple') {
 			}
 		}
 	}
+}
+
+// Convenience tasks for code quality
+tasks.register('lint') {
+	group = 'verification'
+	description = 'Run all code quality checks (Google Style + PMD + SpotBugs)'
+	dependsOn 'checkstyleMain', 'pmdMain', 'spotbugsMain'
+}
+
+// Auto-format Java code task
+tasks.register('format', JavaExec) {
+	group = 'formatting'
+	description = 'Auto-format Java source files'
+	classpath = configurations.googleJavaFormat
+	mainClass = 'com.google.googlejavaformat.java.Main'
+	// Add JVM arguments to fix Java module system issues
+	jvmArgs = [
+		'--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED',
+		'--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED',
+		'--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED',
+		'--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
+		'--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED'
+	]
+	args = ['--replace'] + fileTree('src').matching { include '**/*.java' }.files
+}
+
+// Check format without modifying files (for CI)
+tasks.register('checkFormat', JavaExec) {
+	group = 'verification'
+	description = 'Check if Java source files are properly formatted'
+	classpath = configurations.googleJavaFormat
+	mainClass = 'com.google.googlejavaformat.java.Main'
+	jvmArgs = [
+		'--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED',
+		'--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED',
+		'--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED',
+		'--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
+		'--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED'
+	]
+	args = ['--dry-run', '--set-exit-if-changed'] + fileTree('src').matching { include '**/*.java' }.files
+}
+
+// Task to run all checks before committing
+tasks.register('preCommit') {
+	group = 'verification'
+	description = 'Run all checks before committing code'
+	dependsOn 'build', 'lint', 'test'
 }

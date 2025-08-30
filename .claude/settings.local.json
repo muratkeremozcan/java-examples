@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(./gradlew lint:*)",
+      "Bash(./gradlew:*)",
+      "Bash(echo $JAVA_HOME)",
+      "Bash(/usr/libexec/java_home:*)",
+      "Bash(brew install:*)",
+      "Read(/usr/libexec/**)",
+      "Read(/opt/**)",
+      "Read(/opt/homebrew/Caskroom/**)",
+      "Read(/opt/homebrew/Caskroom/**)",
+      "Bash(cat:*)",
+      "Bash(make lint:*)",
+      "Bash(make:*)",
+      "Bash(make precommit:*)",
+      "Bash(java:*)",
+      "Bash(mkdir:*)",
+      "Bash(git rm:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
