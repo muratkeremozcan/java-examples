@@ -1,4 +1,4 @@
-## Java Dev Environment + Spring Boot (Quick, Repeatable)
+## Java Dev Environment
 
 This repo captures a minimal, modern Java setup you can reuse for future projects.
 
