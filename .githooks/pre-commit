@@ -1,0 +1,25 @@
+#!/bin/sh
+# Pre-commit hook for Java project
+# This hook runs automatically before each commit
+
+echo "🔍 Running pre-commit quality checks..."
+
+# Run auto-fixes first
+echo "1️⃣  Auto-fixing code quality issues..."
+make fix
+if [ $? -ne 0 ]; then
+    echo "❌ Auto-fix failed. Please check the output above."
+    exit 1
+fi
+
+# Run full validation
+echo "2️⃣  Running full validation..."
+make precommit
+if [ $? -ne 0 ]; then
+    echo "❌ Pre-commit validation failed. Please fix the issues above and try again."
+    echo "💡 You can run 'make lint-verbose' to see detailed violation information."
+    exit 1
+fi
+
+echo "✅ All pre-commit checks passed! Proceeding with commit..."
+exit 0

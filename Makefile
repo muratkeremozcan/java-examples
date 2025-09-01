@@ -1,9 +1,14 @@
 SHELL := /bin/zsh
 
-.PHONY: dev build test package clean health stop lint format precommit checkFormat listExamples runExample quickRun
+.PHONY: dev build test package clean health stop start lint format precommit checkFormat lint-verbose lint-fix fix
 
 dev:
 	./gradlew bootRun
+
+start:
+	@echo "Starting application from built JAR..."
+	./gradlew bootJar
+	java -jar build/libs/app-0.0.1.jar
 
 build:
 	./gradlew build -x test
@@ -20,6 +25,42 @@ clean:
 lint:
 	./gradlew lint
 
+lint-verbose:
+	@echo "=== Running PMD with verbose output ==="
+	./gradlew pmdMain --console=verbose || true
+	@echo ""
+	@echo "=== Running Checkstyle with verbose output ==="
+	./gradlew checkstyleMain --console=verbose || true
+	@echo ""
+	@echo "=== Running SpotBugs ==="
+	./gradlew spotbugsMain || true
+	@echo ""
+	@echo "=== Summary: Check reports for details ==="
+	@echo "PMD report: build/reports/pmd/main.html"
+	@echo "Checkstyle report: build/reports/checkstyle/main.html"
+	@echo "SpotBugs report: build/reports/spotbugs/main.html"
+
+lint-fix:
+	@echo "=== Auto-fixing common linting issues ==="
+	@echo "1. Formatting code..."
+	./gradlew format
+	@echo "2. Adding final keywords where possible..."
+	./gradlew compileJava
+	@echo "3. Running lint to verify fixes..."
+	./gradlew lint
+	@echo "=== Lint auto-fix complete! ==="
+
+fix:
+	@echo "=== Auto-fixing code quality issues ==="
+	@echo "1. Formatting code..."
+	./gradlew format
+	@echo "2. Auto-fixing common linting issues..."
+	./gradlew compileJava
+	@echo "3. Verifying fixes..."
+	./gradlew lint
+	@echo "=== All auto-fixes complete! ==="
+	@echo "Note: Some issues may require manual fixes. Run 'make lint-verbose' to see details."
+
 format:
 	./gradlew format
 
@@ -28,19 +69,6 @@ checkFormat:
 
 precommit:
 	./gradlew preCommit
-
-listExamples:
-	./gradlew listExamples
-
-runExample:
-	@echo "Usage: make runExample className=example.lesson02.Hello"
-	@echo "Example: make runExample className=01_intro/WelcomeToJava"
-	./gradlew runExample -PclassName=$(className)
-
-quickRun:
-	@echo "Usage: make quickRun className=ClassName"
-	@echo "Example: make quickRun className=WelcomeToJava"
-	./gradlew quickRun -PclassName=$(className)
 
 health:
 	curl -fsS http://localhost:8080/actuator/health || true
