@@ -1,6 +1,6 @@
 SHELL := /bin/zsh
 
-.PHONY: dev build test package clean health stop start lint format precommit checkFormat lint-verbose lint-fix fix
+.PHONY: dev build test package clean health stop start lint format precommit checkFormat lint-verbose lint-fix fix spotbugs
 
 dev:
 	./gradlew bootRun
@@ -39,6 +39,11 @@ lint-verbose:
 	@echo "PMD report: build/reports/pmd/main.html"
 	@echo "Checkstyle report: build/reports/checkstyle/main.html"
 	@echo "SpotBugs report: build/reports/spotbugs/main.html"
+	@echo ""
+	@echo "📊 Opening reports in browser..."
+	open build/reports/pmd/main.html || true
+	open build/reports/checkstyle/main.html || true
+	open build/reports/spotbugs/main.html || true
 
 lint-fix:
 	@echo "=== Auto-fixing common linting issues ==="
@@ -46,7 +51,9 @@ lint-fix:
 	./gradlew format
 	@echo "2. Adding final keywords where possible..."
 	./gradlew compileJava
-	@echo "3. Running lint to verify fixes..."
+	@echo "3. Running SpotBugs analysis..."
+	./gradlew spotbugsMain
+	@echo "4. Running lint to verify fixes..."
 	./gradlew lint
 	@echo "=== Lint auto-fix complete! ==="
 
@@ -56,7 +63,9 @@ fix:
 	./gradlew format
 	@echo "2. Auto-fixing common linting issues..."
 	./gradlew compileJava
-	@echo "3. Verifying fixes..."
+	@echo "3. Running SpotBugs analysis..."
+	./gradlew spotbugsMain
+	@echo "4. Verifying fixes..."
 	./gradlew lint
 	@echo "=== All auto-fixes complete! ==="
 	@echo "Note: Some issues may require manual fixes. Run 'make lint-verbose' to see details."
@@ -67,8 +76,23 @@ format:
 checkFormat:
 	./gradlew checkFormat
 
+spotbugs:
+	@echo "🔍 Running SpotBugs analysis..."
+	./gradlew spotbugsMain
+	@echo "📊 Opening SpotBugs report..."
+	open build/reports/spotbugs/main.html
+
 precommit:
+	@echo "=== Running full pre-commit validation ==="
+	@echo "1. Formatting check..."
+	./gradlew checkFormat
+	@echo "2. Code quality checks..."
+	./gradlew lint
+	@echo "3. SpotBugs analysis..."
+	./gradlew spotbugsMain
+	@echo "4. Full validation pipeline..."
 	./gradlew preCommit
+	@echo "=== All pre-commit checks passed! ==="
 
 health:
 	curl -fsS http://localhost:8080/actuator/health || true

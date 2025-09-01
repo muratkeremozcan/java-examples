@@ -75,24 +75,29 @@ rm -rf app app.zip
 ### Using Make (recommended - convenient shortcuts)
 
 ```bash
-# Development
+# Development & Application
 make dev              # Start Spring Boot application (development mode with hot reload)
 make start            # Start Spring Boot application (production mode from JAR)
+make stop             # Stop running application
+make health           # Check application health
+
+# Build & Testing
 make build            # Build project (excluding tests)
 make test             # Run tests
 make package          # Create JAR file
+make clean            # Clean build artifacts
 
-# Code quality and maintenance
-make fix              # Auto-fix formatting and linting issues
+# Code Quality - Main Workflow
+make fix              # Auto-fix code issues (formatting, linting, SpotBugs)
+make precommit        # Validate code quality without making changes
+
+# Code Quality - Individual Tools
 make format           # Auto-format code
 make checkFormat      # Check formatting without changes
 make lint             # Run all linting checks
-make lint-verbose     # Show detailed violation information
+make spotbugs         # Run SpotBugs bug detection (auto-opens report)
+make lint-verbose     # Show detailed violations (auto-opens all reports)
 make lint-fix         # Auto-fix common linting issues
-make precommit        # Full validation pipeline
-make clean            # Clean build artifacts
-make health           # Check application health
-make stop             # Stop running application
 ```
 
 ## Git Hooks (Automatic Quality Checks)
@@ -128,23 +133,4 @@ git commit --no-verify
 ```bash
 # Test the hooks manually
 .githooks/pre-commit
-```
-
-### Using Gradle directly
-
-```bash
-# Build project
-./gradlew build -x test                   # Build (excluding tests)
-./gradlew clean                           # Clean build artifacts
-
-# Code quality and linting
-./gradlew lint                            # Run all linting checks (Google Style + PMD + SpotBugs)
-./gradlew checkFormat                     # Check formatting without changes
-./gradlew format                          # Auto-format with Google Java Style
-./gradlew preCommit                       # Full validation pipeline
-
-# Individual quality tools
-./gradlew checkstyleMain                  # Google Java Style checks
-./gradlew pmdMain                         # Static analysis
-./gradlew spotbugsMain                    # Bug detection
 ```
