@@ -76,34 +76,63 @@ rm -rf app app.zip
 
 ```bash
 # Development
-make dev              # Start Spring Boot application
+make dev              # Start Spring Boot application (development mode with hot reload)
+make start            # Start Spring Boot application (production mode from JAR)
 make build            # Build project (excluding tests)
 make test             # Run tests
 make package          # Create JAR file
 
-# Examples and running
-make listExamples     # Show all available example classes
-make runExample className=ClassName  # Run specific example
-make quickRun className=ClassName    # Quick compile and run
-
 # Code quality and maintenance
-make lint             # Run all linting checks
+make fix              # Auto-fix formatting and linting issues
 make format           # Auto-format code
 make checkFormat      # Check formatting without changes
+make lint             # Run all linting checks
+make lint-verbose     # Show detailed violation information
+make lint-fix         # Auto-fix common linting issues
 make precommit        # Full validation pipeline
 make clean            # Clean build artifacts
 make health           # Check application health
 make stop             # Stop running application
 ```
 
+## Git Hooks (Automatic Quality Checks)
+
+This project includes Git hooks that automatically run quality checks before each commit:
+
+### Setup (One-time)
+
+```bash
+# Run the setup script
+./scripts/setup-hooks.sh
+
+# Or manually configure
+git config core.hooksPath .githooks
+chmod +x .githooks/pre-commit
+```
+
+### What Happens Automatically
+
+- **Before each commit**: `make fix` runs to auto-fix issues
+- **Then**: `make precommit` validates everything passes
+- **If checks fail**: Commit is blocked until issues are resolved
+
+### Emergency Override
+
+```bash
+# Skip hooks if absolutely necessary (not recommended)
+git commit --no-verify
+```
+
+### Manual Testing
+
+```bash
+# Test the hooks manually
+.githooks/pre-commit
+```
+
 ### Using Gradle directly
 
 ```bash
-# Examples and running
-./gradlew listExamples                    # Show all available example classes
-./gradlew runExample -PclassName=ClassName  # Run specific example
-./gradlew quickRun -PclassName=ClassName    # Quick compile and run
-
 # Build project
 ./gradlew build -x test                   # Build (excluding tests)
 ./gradlew clean                           # Clean build artifacts
