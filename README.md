@@ -98,6 +98,7 @@ make lint             # Run all linting checks
 make spotbugs         # Run SpotBugs bug detection (auto-opens report)
 make lint-verbose     # Show detailed violations (auto-opens all reports)
 make lint-fix         # Auto-fix common linting issues
+make pmd              # Run PMD code quality checks (auto-opens report)
 ```
 
 ## Git Hooks (Automatic Quality Checks)

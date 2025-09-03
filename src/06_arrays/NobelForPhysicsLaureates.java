@@ -1,4 +1,10 @@
+/** Demonstrates array operations with Nobel Prize laureates and their winning years. */
 public class NobelForPhysicsLaureates {
+  /**
+   * Main method to demonstrate array manipulation.
+   *
+   * @param args command line arguments (not used)
+   */
   public static void main(String[] args) {
     final String[] nobelLaureates = {"Curie", "Einstein", "Fermi"};
     final int[] years = {1903, 1921, 1938};

@@ -82,6 +82,12 @@ spotbugs:
 	@echo "📊 Opening SpotBugs report..."
 	open build/reports/spotbugs/main.html
 
+pmd:
+	@echo "🔍 Running PMD analysis..."
+	./gradlew pmdMain --console=verbose
+	@echo "📊 Opening PMD report..."
+	open build/reports/pmd/main.html
+
 precommit:
 	@echo "=== Running full pre-commit validation ==="
 	@echo "1. Formatting check..."
