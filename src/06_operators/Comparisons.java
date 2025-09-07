@@ -1,4 +1,10 @@
+/** Demonstrates comparison operators in Java. */
 public class Comparisons {
+  /**
+   * Main method to demonstrate comparison operations.
+   *
+   * @param args Command line arguments (not used)
+   */
   public static void main(String[] args) {
     final boolean first = 5 < 7;
     final boolean second = 9 >= 2;

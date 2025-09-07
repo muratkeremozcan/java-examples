@@ -27,7 +27,7 @@ jobs:
         run: ./gradlew test
 
       - name: Check code formatting
-        run: ./gradlew checkFormat
+        run: make format
 
       - name: Run linting and code quality checks
         run: ./gradlew lint
