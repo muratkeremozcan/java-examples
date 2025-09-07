@@ -1,4 +1,4 @@
-SHELL := /bin/zsh
+SHELL := /bin/bash
 
 .PHONY: dev build test package clean health stop start lint format format-fix precommit lint-verbose lint-fix fix spotbugs
 
