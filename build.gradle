@@ -29,7 +29,7 @@ configurations {
 }
 
 dependencies {
-	googleJavaFormat 'com.google.googlejavaformat:google-java-format:1.24.0'
+	googleJavaFormat 'com.google.googlejavaformat:google-java-format:1.24.0:all-deps'
 }
 
 // Code quality and linting configuration
@@ -39,6 +39,21 @@ checkstyle {
 	configFile = resources.text.fromUri("https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-10.17.0/src/main/resources/google_checks.xml").asFile()
 	ignoreFailures = false
 	maxWarnings = 5
+}
+
+// Task to get the Google Java Format JAR path
+tasks.register('getGoogleJavaFormatJar') {
+    group = 'Build Setup'
+    description = 'Prints the path to the Google Java Format JAR'
+    
+    doLast {
+        def jarFile = configurations.googleJavaFormat.find { it.name.startsWith('google-java-format') }
+        if (jarFile) {
+            println jarFile.absolutePath
+        } else {
+            throw new GradleException('Google Java Format JAR not found in dependencies')
+        }
+    }
 }
 
 pmd {

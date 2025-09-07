@@ -88,16 +88,19 @@ make package          # Create JAR file
 make clean            # Clean build artifacts
 
 # Code Quality - Main Workflow
-make fix              # Auto-fix code issues (formatting, linting, SpotBugs)
 make precommit        # Validate code quality without making changes
+make fix              # Auto-fix code issues (formatting, linting, SpotBugs)
 
 # Code Quality - Individual Tools
-make format           # Auto-format code
-make checkFormat      # Check formatting without changes
-make lint             # Run all linting checks
-make spotbugs         # Run SpotBugs bug detection (auto-opens report)
+make format           # Check code formatting without changes
+make format-fix       # Auto-format code
+
+make lint             # Run all linting checks without changes
 make lint-verbose     # Show detailed violations (auto-opens all reports)
 make lint-fix         # Auto-fix common linting issues
+
+# No "fix" for these, as they are not auto-fixable
+make spotbugs         # Run SpotBugs bug detection (auto-opens report)
 make pmd              # Run PMD code quality checks (auto-opens report)
 ```
 
