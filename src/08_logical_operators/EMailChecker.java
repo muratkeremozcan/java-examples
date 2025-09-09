@@ -1,4 +1,4 @@
-public class EMailChecker {
+public class EmailChecker {
   public static void main(String[] args) {
     final String address = "martin.doeb@datacamp.com";
     validateEmail(address);
