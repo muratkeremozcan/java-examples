@@ -1,8 +1,14 @@
+/** A utility class for checking and categorizing grades. */
 public class GradeChecker {
   private static final int FAILING_GRADE = 10;
   private static final int PASSING_GRADE = 14;
   private static final int DISTINCTION_GRADE = 18;
 
+  /**
+   * Main method to demonstrate grade checking.
+   *
+   * @param args command line arguments (not used)
+   */
   @SuppressWarnings("unused")
   public static void main(String[] args) {
     final int grade = 14;
