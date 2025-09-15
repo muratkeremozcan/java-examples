@@ -83,11 +83,11 @@ public final class LsCommand {
       if (!isFile(elem)) {
         directoryCounter++;
       }
-      
+
       if (!isHidden(elem)) {
         System.out.print(elem.substring(2));
       }
-      
+
       if (isNonLocal(elem)) {
         nestedCounter++;
       } else {
