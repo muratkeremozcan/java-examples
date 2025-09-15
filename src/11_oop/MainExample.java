@@ -2,7 +2,7 @@ public class MainExample {
 
   // Java supports nested classes
   // The static means it doesn't have access to Main's instance members
-  final private static class MyCar {
+  private static final class MyCar {
     private final String color;
     private final String model;
     private final int year;
