@@ -9,7 +9,7 @@ public class PriceCalculator {
    * @param a the input value to be multiplied
    * @return the input value multiplied by 1.5
    */
-  private static double oneAndAHalf(final double a) {
+  private static double oneAndaHalf(final double a) {
     return a * 1.5;
   }
 
@@ -23,7 +23,7 @@ public class PriceCalculator {
     final double[] numbers = {76, 38.3, 10, 42, 98.5, 84, 50, 72.2, 98, 96};
 
     for (int i = 0; i < numbers.length; i++) {
-      numbers[i] = oneAndAHalf(numbers[i]);
+      numbers[i] = oneAndaHalf(numbers[i]);
       System.out.println(numbers[i]);
     }
   }
