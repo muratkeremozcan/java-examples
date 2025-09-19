@@ -1,3 +1,8 @@
+// - A `static` nested class cannot access the outer instance.
+// - The outer class *can* access the nested class’s private members; outsiders cannot.
+// - `private` truly hides members across package/subclass boundaries (use a getter).
+// - `final` fields are set once (like `readonly` in TS).
+
 /** Demonstrates basic Java OOP concepts including nested classes and access modifiers. */
 public class MainExample {
 
@@ -72,38 +77,95 @@ public class MainExample {
 /* TS equivalent
 // Main.ts
 
-class Car {
-  // Shorthand constructor with parameter properties
+// Abstract class example (similar to MainExampleAbs.java)
+abstract class Car {
   constructor(
-    public readonly color: string = "red",
-    public readonly model: string = "camry",
-    public readonly year: number = 2019,
-    private readonly vehicleNumber: number = 101_189
+    public readonly color: string,
+    public readonly model: string,
+    public readonly year: number,
+    private readonly vehicleNumber: number
   ) {}
 
-  // Public method
+  // Concrete method with implementation
   public turnEngineOn(): void {
     console.log("engine is on");
   }
 
-  // Public method with parameters and return type
+  // Abstract method that subclasses must implement
+  public abstract getCarType(): string;
+
+  // Another concrete method
   public calculateMpg(milesDriven: number, gallonsUsed: number): number {
     return milesDriven / gallonsUsed;
   }
+}
 
-  // Private method (only accessible within the class)
-  private deployAirbags(): void {
-    console.log("airbags deployed");
+// Concrete implementation (Toyota)
+class Toyota extends Car {
+  constructor(color: string, model: string, year: number, vehicleNumber: number) {
+    super(color, model, year, vehicleNumber);
+  }
+
+  public getCarType(): string {
+    return "Sedan";
   }
 }
 
-// Usage - now we can create with parameters or use defaults
-const myCar = new Car(); // Uses all default values
-console.log(myCar.color); // "red"
-console.log(myCar.model); // "camry"
+// Interface example (similar to MainExampleInt.java)
+interface ICar {
+  readonly color: string;
+  readonly model: string;
+  readonly year: number;
+  getVehicleNumber(): number;
+  getCarType(): string;
+  turnEngineOn(): void;
+  calculateMpg(milesDriven: number, gallonsUsed: number): number;
+}
 
-// Or specify values
-const otherCar = new Car("blue", "corolla", 2023, 202_345);
-console.log(otherCar.color); // "blue"
+// Class implementing the interface
+class Tesla implements ICar {
+  constructor(
+    public readonly color: string,
+    public readonly model: string,
+    public readonly year: number,
+    private readonly vehicleNumber: number
+  ) {}
 
+  public getVehicleNumber(): number {
+    return this.vehicleNumber;
+  }
+
+  public getCarType(): string {
+    return "Electric";
+  }
+
+  public turnEngineOn(): void {
+    console.log("Starting electric motors...");
+  }
+
+  public calculateMpg(milesDriven: number, gallonsUsed: number): number {
+    return milesDriven * 3.5; // MPGe calculation
+  }
+}
+
+// Usage examples
+console.log("=== Abstract Class Example ===");
+const camry = new Toyota("red", "Camry", 2019, 101189);
+console.log(camry.color); // "red"
+console.log(camry.getCarType()); // "Sedan"
+camry.turnEngineOn(); // "engine is on"
+
+console.log("\n=== Interface Example ===");
+const model3 = new Tesla("black", "Model 3", 2022, 201489);
+console.log(model3.color); // "black"
+console.log(model3.getCarType()); // "Electric"
+model3.turnEngineOn(); // "Starting electric motors..."
+
+// TypeScript also supports structural typing
+function printCarInfo(car: { color: string; model: string }) {
+  console.log(`${car.color} ${car.model}`);
+}
+
+printCarInfo(camry); // "red Camry"
+printCarInfo(model3); // "black Model 3"
 */
