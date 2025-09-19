@@ -1,12 +1,19 @@
+// Takeaways (Abstract class):
+// - Abstract classes can mix concrete + abstract methods; you cannot instantiate them.
+// - Subclasses must implement abstract methods and may `@Override` concrete ones.
+// - Use when you want shared state/behavior with extension points (single inheritance).
+// - `final` fields behave like TS `readonly`.
+
 /**
- * Demonstrates the use of abstract classes in Java.
- * This example shows how to define an abstract class with both concrete and abstract methods,
- * and how to create concrete subclasses that extend it.
+ * Demonstrates the use of abstract classes in Java. This example shows how to define an abstract
+ * class with both concrete and abstract methods, and how to create concrete subclasses that extend
+ * it.
  */
 public class MainExampleAbs {
 
-  // Abstract class that extends the original MyCar with one abstract method
-  // abstract class is like interface + concrete methods
+  // Abstract class relaxes the inheritance, by having abstract methods
+  // that the children have to implement
+  // it also allows @Override to be used on methods that are already implemented
   private abstract static class MyCar {
     public final String color;
     public final String model;
@@ -37,15 +44,13 @@ public class MainExampleAbs {
   }
 
   // Concrete implementation
-  /**
-   * A concrete implementation of MyCar representing a Toyota vehicle.
-   */
+  /** A concrete implementation of MyCar representing a Toyota vehicle. */
   public static final class Toyota extends MyCar {
     public Toyota(final String color, final String model, final int year, final int vehicleNumber) {
       super(color, model, year, vehicleNumber);
     }
 
-    // the to implement the abstract method
+    // need to implement the abstract method
     @Override
     public String getCarType() {
       return "Sedan";
@@ -53,21 +58,19 @@ public class MainExampleAbs {
   }
 
   // Another concrete implementation
-  /**
-   * A concrete implementation of MyCar representing a Tesla electric vehicle.
-   */
+  /** A concrete implementation of MyCar representing a Tesla electric vehicle. */
   public static final class Tesla extends MyCar {
     public Tesla(final String color, final String model, final int year, final int vehicleNumber) {
       super(color, model, year, vehicleNumber);
     }
 
-    // the to implement the abstract method
+    // need to implement the abstract method
     @Override
     public String getCarType() {
       return "Electric";
     }
 
-    // optionally can override the concrete method
+    // optionally can override other concrete methods
     @Override
     public void turnEngineOn() {
       System.out.println("Starting electric motors...");
