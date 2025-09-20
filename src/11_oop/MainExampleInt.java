@@ -1,4 +1,4 @@
-// - Interfaces define a contract; classes `implements` it (Java is nominal, not structural).
+// - Interfaces define a contract; classes `implements` it.
 // - Java 8+ allows `default` methods with bodies; classes can override them.
 // - Prefer interfaces for capabilities; you can implement many interfaces.
 // - No fields with state here (only constants); keep data in the class.
