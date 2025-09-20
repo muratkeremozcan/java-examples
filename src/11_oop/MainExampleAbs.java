@@ -2,7 +2,6 @@
 // - Abstract classes can mix concrete + abstract methods; you cannot instantiate them.
 // - Subclasses must implement abstract methods and may `@Override` concrete ones.
 // - Use when you want shared state/behavior with extension points (single inheritance).
-// - `final` fields behave like TS `readonly`.
 
 /**
  * Demonstrates the use of abstract classes in Java. This example shows how to define an abstract
