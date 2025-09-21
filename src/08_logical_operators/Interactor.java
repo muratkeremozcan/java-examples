@@ -1,4 +1,7 @@
+/** Simple switch example for object interactions. */
 public class Interactor {
+
+  /** Entry point demonstrating a switch over possible objects. */
   public static void main(String[] args) {
     final String object = "Wall";
 

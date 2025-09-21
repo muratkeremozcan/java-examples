@@ -4,16 +4,6 @@
  */
 public class PriceCalculator {
   /**
-   * Multiplies a number by 1.5, typically used for price adjustments.
-   *
-   * @param a the input value to be multiplied
-   * @return the input value multiplied by 1.5
-   */
-  private static double oneAndaHalf(final double a) {
-    return a * 1.5;
-  }
-
-  /**
    * Main method that demonstrates price adjustment calculations. Applies a 1.5x multiplier to each
    * price in an array and prints the results.
    *
@@ -26,5 +16,15 @@ public class PriceCalculator {
       numbers[i] = oneAndaHalf(numbers[i]);
       System.out.println(numbers[i]);
     }
+  }
+
+  /**
+   * Multiplies a number by 1.5, typically used for price adjustments.
+   *
+   * @param a the input value to be multiplied
+   * @return the input value multiplied by 1.5
+   */
+  private static double oneAndaHalf(final double a) {
+    return a * 1.5;
   }
 }

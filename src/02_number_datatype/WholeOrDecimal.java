@@ -1,4 +1,3 @@
-// enter a note about when to use which numeric data type
 // whole numbers: byte, short, int, long
 // decimal numbers: double, float
 

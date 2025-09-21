@@ -1,7 +1,9 @@
 class AllNobelLaureates {
   public static void main(String[] args) {
 
-    final String[] physicsLaureates = {"Curie", "Einstein", "Fermi"};
+    final String[] physicsLaureates = {
+      "Curie", "Einstein", "Fermi"
+    }; // objects are considered String[] in Java
     final String[] literatureLaureates = {"Kipling", "Shaw", "Hemingway", "Seifert"};
     final String[] chemistryLaureates = {"Curie", "Heyrovsky"};
 
