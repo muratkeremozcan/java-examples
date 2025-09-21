@@ -1,3 +1,13 @@
+// Access modifiers:
+// public: exposes to all
+// protected: package (same folder structure) +subclasses
+// private: to the declaring type
+// static binds state/behavior to the class rather than instances.
+// In these examples, Java has to keep `static` on the entry-point method and on the nested class
+// so we can call them without materializing a `MainExample` instance.
+
+// We need them here so only the entry point stays public while helper logic stays private.
+
 /** A utility class for validating email addresses. */
 public class EmailChecker {
   /**

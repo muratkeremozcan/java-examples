@@ -20,6 +20,34 @@ public final class LsCommand {
   };
 
   /**
+   * Main method that processes the directory contents and prints the results.
+   *
+   * @param args command line arguments (not used)
+   */
+  public static void main(final String[] args) {
+    int hiddenCounter = 0;
+    int directoryCounter = 0;
+    int nestedCounter = 0;
+
+    for (final String elem : DIRECTORY_CONTENT) {
+      if (!isFile(elem)) {
+        directoryCounter++;
+      }
+
+      if (!isHidden(elem)) {
+        System.out.print(elem.substring(2));
+      }
+
+      if (isNonLocal(elem)) {
+        nestedCounter++;
+      } else {
+        hiddenCounter++;
+      }
+    }
+    printSummary(hiddenCounter, directoryCounter, nestedCounter);
+  }
+
+  /**
    * Checks if the element represents a file.
    *
    * @param elem the directory entry to check
@@ -67,33 +95,5 @@ public final class LsCommand {
             + " directories,\nAnd "
             + nestedCounter
             + " nested files");
-  }
-
-  /**
-   * Main method that processes the directory contents and prints the results.
-   *
-   * @param args command line arguments (not used)
-   */
-  public static void main(final String[] args) {
-    int hiddenCounter = 0;
-    int directoryCounter = 0;
-    int nestedCounter = 0;
-
-    for (final String elem : DIRECTORY_CONTENT) {
-      if (!isFile(elem)) {
-        directoryCounter++;
-      }
-
-      if (!isHidden(elem)) {
-        System.out.print(elem.substring(2));
-      }
-
-      if (isNonLocal(elem)) {
-        nestedCounter++;
-      } else {
-        hiddenCounter++;
-      }
-    }
-    printSummary(hiddenCounter, directoryCounter, nestedCounter);
   }
 }

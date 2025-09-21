@@ -5,16 +5,6 @@
  */
 public class Collatz {
   /**
-   * Checks if a number is even.
-   *
-   * @param n the number to check
-   * @return true if the number is even, false otherwise
-   */
-  private static boolean isEven(final int n) {
-    return n % 2 == 0;
-  }
-
-  /**
    * Generates and prints the Collatz sequence starting from 1634. The sequence continues until
    * reaching 1, with each step printed. Finally, it prints the total number of steps taken.
    *
@@ -38,5 +28,15 @@ public class Collatz {
       i++;
     }
     System.out.println("Number of steps: " + i);
+  }
+
+  /**
+   * Checks if a number is even.
+   *
+   * @param n the number to check
+   * @return true if the number is even, false otherwise
+   */
+  private static boolean isEven(final int n) {
+    return n % 2 == 0;
   }
 }

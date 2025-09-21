@@ -19,10 +19,12 @@ public class WeightWatcher {
       198, 190, 188, 187, 190, 198, 201, 250, 203, 210, 205, 170, 180, 200, 203, 210, 180
     };
 
+    // KEY: use a foreach loop when you don't need the index
     for (final int weight : weights) {
       System.out.println(weight);
     }
 
+    // KEY: use a regular for loop when you need the index
     System.out.println("\nuse a regular for loop when you need the index\n");
 
     for (int i = 0; i < weights.length; i++) {

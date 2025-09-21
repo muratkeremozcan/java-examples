@@ -10,84 +10,14 @@
  */
 public class MainExampleAbs {
 
-  // Abstract class relaxes the inheritance, by having abstract methods
-  // that the children have to implement
-  // it also allows @Override to be used on methods that are already implemented
-  private abstract static class MyCar {
-    public final String color;
-    public final String model;
-    public final int year;
-    private final int vehicleNumber;
-
-    public MyCar(final String color, final String model, final int year, final int vehicleNumber) {
-      this.color = color;
-      this.model = model;
-      this.year = year;
-      this.vehicleNumber = vehicleNumber;
-    }
-
-    public void turnEngineOn() {
-      System.out.println("engine is on");
-    }
-
-    public int getVehicleNumber() {
-      return vehicleNumber;
-    }
-
-    public int calculateMpg(final int milesDriven, final int gallonsUsed) {
-      return milesDriven / gallonsUsed;
-    }
-
-    // This is the only abstract method that subclasses must implement
-    public abstract String getCarType();
-  }
-
-  // Concrete implementation
-  /** A concrete implementation of MyCar representing a Toyota vehicle. */
-  public static final class Toyota extends MyCar {
-    public Toyota(final String color, final String model, final int year, final int vehicleNumber) {
-      super(color, model, year, vehicleNumber);
-    }
-
-    // need to implement the abstract method
-    @Override
-    public String getCarType() {
-      return "Sedan";
-    }
-  }
-
-  // Another concrete implementation
-  /** A concrete implementation of MyCar representing a Tesla electric vehicle. */
-  public static final class Tesla extends MyCar {
-    public Tesla(final String color, final String model, final int year, final int vehicleNumber) {
-      super(color, model, year, vehicleNumber);
-    }
-
-    // need to implement the abstract method
-    @Override
-    public String getCarType() {
-      return "Electric";
-    }
-
-    // optionally can override other concrete methods
-    @Override
-    public void turnEngineOn() {
-      System.out.println("Starting electric motors...");
-    }
-
-    @Override
-    public int calculateMpg(final int milesDriven, final int gallonsUsed) {
-      return (int) (milesDriven * 3.5);
-    }
-  }
-
   /**
    * Main method to demonstrate the usage of abstract classes and their implementations.
    *
    * @param args command line arguments (not used)
    */
   public static void main(String[] args) {
-    // Can't instantiate abstract class directly
+    // KEY: we can't instantiate abstract class directly
+    // instead, the children have to extend from the abstract class
     // MyCar car = new MyCar("red", "generic", 2020, 100_000); // Compile error!
 
     // Using the Toyota implementation
@@ -111,4 +41,134 @@ public class MainExampleAbs {
     System.out.println("MPGe: " + tesla.calculateMpg(200, 1)); // Different calculation
     System.out.println("Car type: " + tesla.getCarType());
   }
+
+  // Abstract class relaxes the inheritance, by having abstract methods
+  // that the children have to implement
+  // it also allows @Override to be used on methods that are already implemented
+  private abstract static class MyCar {
+    public final String color;
+    public final String model;
+    public final int year;
+    private final int vehicleNumber;
+
+    public MyCar(final String color, final String model, final int year, final int vehicleNumber) {
+      this.color = color;
+      this.model = model;
+      this.year = year;
+      this.vehicleNumber = vehicleNumber;
+    }
+
+    // KEY: the abstract class can have concrete methods; children do not have to implement them
+    public void turnEngineOn() {
+      System.out.println("engine is on");
+    }
+
+    public int getVehicleNumber() {
+      return vehicleNumber;
+    }
+
+    public int calculateMpg(final int milesDriven, final int gallonsUsed) {
+      return milesDriven / gallonsUsed;
+    }
+
+    // KEY: This is the only abstract method that subclasses must implement
+    public abstract String getCarType();
+  }
+
+  /** A concrete implementation of MyCar representing a Toyota vehicle. */
+  public static final class Toyota extends MyCar {
+    public Toyota(final String color, final String model, final int year, final int vehicleNumber) {
+      super(color, model, year, vehicleNumber);
+    }
+
+    // KEY: need to implement the abstract method, everything else is inherited
+    @Override
+    public String getCarType() {
+      return "Sedan";
+    }
+  }
+
+  // Another concrete implementation
+  /** A concrete implementation of MyCar representing a Tesla electric vehicle. */
+  public static final class Tesla extends MyCar {
+    public Tesla(final String color, final String model, final int year, final int vehicleNumber) {
+      super(color, model, year, vehicleNumber);
+    }
+
+    // KEY: need to implement the abstract method, everything else is inherited
+    @Override
+    public String getCarType() {
+      return "Electric";
+    }
+
+    // KEY: optionally can override other concrete methods
+    @Override
+    public void turnEngineOn() {
+      System.out.println("Starting electric motors...");
+    }
+
+    @Override
+    public int calculateMpg(final int milesDriven, final int gallonsUsed) {
+      return (int) (milesDriven * 3.5);
+    }
+  }
 }
+
+/* TS equivalent
+// KEY: abstract classes behave the same—can't instantiate them, subclasses must override the
+// abstract members. TypeScript keeps everything at module scope, and `private` is only
+// compile-time (still good enough for examples).
+
+abstract class MyCar {
+  constructor(
+    public readonly color: string,
+    public readonly model: string,
+    public readonly year: number,
+    private readonly vehicleNumber: number,
+  ) {}
+
+  turnEngineOn(): void {
+    console.log('engine is on');
+  }
+
+  getVehicleNumber(): number {
+    return this.vehicleNumber;
+  }
+
+  calculateMpg(milesDriven: number, gallonsUsed: number): number {
+    return Math.floor(milesDriven / gallonsUsed);
+  }
+
+  abstract getCarType(): string;
+}
+
+class Toyota extends MyCar {
+  override getCarType(): string {
+    return 'Sedan';
+  }
+}
+
+class Tesla extends MyCar {
+  override getCarType(): string {
+    return 'Electric';
+  }
+
+  override turnEngineOn(): void {
+    console.log('Starting electric motors...');
+  }
+
+  override calculateMpg(milesDriven: number, gallonsUsed: number): number {
+    return Math.floor(milesDriven * 3.5);
+  }
+}
+
+function main(): void {
+  const toyota = new Toyota('red', 'Camry', 2019, 101189);
+  console.log(toyota.getCarType());
+
+  const tesla = new Tesla('black', 'Model 3', 2022, 201489);
+  console.log(tesla.getCarType());
+}
+
+main();
+*/
