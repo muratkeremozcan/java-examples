@@ -77,6 +77,7 @@ public class MainExample {
     }
   }
 
+  /** Lightweight subclass that inherits all behavior from {@link MyCar}. */
   public static final class Toyota extends MyCar {
     public Toyota(final String color, final String model, final int year, final int vehicleNumber) {
       super(color, model, year, vehicleNumber);
