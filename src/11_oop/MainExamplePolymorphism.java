@@ -11,6 +11,7 @@ public class MainExamplePolymorphism {
 
   private static final String REMOTE_START_MODE = "remote";
 
+  /** Entry point that walks through examples of overloading and overriding. */
   public static void main(String[] args) {
     final MyCar[] garage = {
       new Toyota("red", "Camry", 2019, 101_189), new Tesla("black", "Model 3", 2022, 201_489)
