@@ -25,6 +25,10 @@
         <exclude name="LocalVariableNamingConventions"/>
         <!-- Allow classes without package declarations for learning examples -->
         <exclude name="NoPackage"/>
+        <!-- Allow use of 'var' for local variables -->
+        <exclude name="UseExplicitTypes"/>
+        <!-- Allow local var type inference without forcing final -->
+        <exclude name="LocalVariableCouldBeFinal"/>
     </rule>
 
     <!-- Design -->
@@ -39,6 +43,8 @@
     <rule ref="category/java/errorprone.xml">
         <!-- Allow empty catch blocks for simple examples -->
         <exclude name="EmptyCatchBlock"/>
+        <!-- Allow repeated demo strings in examples -->
+        <exclude name="AvoidDuplicateLiterals"/>
     </rule>
 
     <!-- Performance -->

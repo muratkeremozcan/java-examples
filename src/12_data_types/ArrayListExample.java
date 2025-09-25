@@ -1,6 +1,5 @@
 // import java.util.*; // would import all
 import java.util.ArrayList;
-import java.util.List;
 
 // Arrays vs Collections
 // Not resizable - Dynamically sized
@@ -14,8 +13,7 @@ public class ArrayListExample {
 
   /** Entry point that showcases simple List operations. */
   public static void main(String[] args) {
-    List<String> list; // array equivalent would be String[]
-    list = new ArrayList<>();
+    var list = new ArrayList<String>(); // array equivalent would be String[]
     list.add("hello");
     list.add("world");
     System.out.println(list);
