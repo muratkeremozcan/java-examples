@@ -6,6 +6,7 @@
  */
 public class CheckedExceptionHandling {
 
+  /** Entry point demonstrating that checked exceptions must be caught (or declared) by callers. */
   public static void main(String[] args) {
     // try this line by itself, the compiler will throw an error
     // Class.forName("java.util.ArrayList");
