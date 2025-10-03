@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Demonstrates common collection utilities by juggling city names between arrays and collections.
@@ -14,7 +13,8 @@ public class AllTheCities {
    */
   public static void main(String[] args) {
     String[] euCapitals = {"Paris", "London", "Prague"};
-    ArrayList<String> capitals = new ArrayList<>(); // NOPMD - example needs concrete type
+    // ArrayList<String> capitals = new ArrayList<String>(); // NOPMD - example needs concrete type
+    var capitals = new ArrayList<String>(); // preferred newer way
 
     // Bulk add: push multiple elements into the list in a single call instead of repeating
     // add(...).
@@ -23,7 +23,8 @@ public class AllTheCities {
     // Arrays.asList returns a fixed-size list view backed by the original array (not a
     // java.util.ArrayList).
     // Element updates reflect in euCapitals, but add/remove throw UnsupportedOperationException.
-    final List<String> euCapitalsList = Arrays.asList(euCapitals);
+    // final List<String> euCapitalsList = Arrays.asList(euCapitals);
+    var euCapitalsList = Arrays.asList(euCapitals); // preferred newer way
 
     // In-place sort and reverse on the same list to highlight mutating utility methods.
     Collections.sort(capitals);

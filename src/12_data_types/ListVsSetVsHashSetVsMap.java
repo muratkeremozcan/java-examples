@@ -23,7 +23,7 @@ public class ListVsSetVsHashSetVsMap {
   /** Shows how ArrayList keeps insertion order and accepts duplicates. */
   @SuppressWarnings("PMD.LooseCoupling")
   private static void demoList() {
-    ArrayList<Integer> heightsList = new ArrayList<>(); // NOPMD - concrete type for illustration
+    var heightsList = new ArrayList<Integer>();
     heightsList.add(72);
     heightsList.add(64);
     heightsList.add(66);
@@ -37,7 +37,7 @@ public class ListVsSetVsHashSetVsMap {
   /** Demonstrates LinkedHashSet uniqueness with predictable iteration order. */
   @SuppressWarnings("PMD.LooseCoupling")
   private static void demoSet() {
-    LinkedHashSet<Integer> heightsSet = new LinkedHashSet<>(); // NOPMD - concrete type for lesson
+    var heightsSet = new LinkedHashSet<Integer>();
     heightsSet.add(72);
     heightsSet.add(64);
     heightsSet.add(66);
@@ -52,7 +52,7 @@ public class ListVsSetVsHashSetVsMap {
   /** Illustrates hash-based uniqueness without guaranteed ordering. */
   @SuppressWarnings("PMD.LooseCoupling")
   private static void demoHashSet() {
-    HashSet<Integer> heightsHashSet = new HashSet<>(); // NOPMD - concrete type for lesson
+    var heightsHashSet = new HashSet<Integer>();
     heightsHashSet.add(72);
     heightsHashSet.add(64);
     heightsHashSet.add(66);
@@ -65,8 +65,7 @@ public class ListVsSetVsHashSetVsMap {
   /** Highlights fixed-capacity FIFO behaviour with ArrayBlockingQueue. */
   @SuppressWarnings("PMD.LooseCoupling")
   private static void demoArrayBlockingQueue() {
-    ArrayBlockingQueue<Integer> heightsQueue =
-        new ArrayBlockingQueue<>(3); // NOPMD - concrete type keeps message clear
+    var heightsQueue = new ArrayBlockingQueue<Integer>(3);
     heightsQueue.add(72);
     heightsQueue.add(64);
     heightsQueue.add(66); // queue now at capacity
@@ -82,7 +81,7 @@ public class ListVsSetVsHashSetVsMap {
   /** Demonstrates key/value lookups and overwrites in HashMap. */
   @SuppressWarnings({"PMD.LooseCoupling", "PMD.UseConcurrentHashMap"})
   private static void demoMap() {
-    HashMap<String, Integer> heightsByName = new HashMap<>(); // NOPMD - concrete type for lesson
+    var heightsByName = new HashMap<String, Integer>();
     heightsByName.put("Alice", 72);
     heightsByName.put("Ben", 64);
     heightsByName.put("Clair", 66);
