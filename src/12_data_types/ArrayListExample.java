@@ -2,11 +2,11 @@
 import java.util.ArrayList;
 
 // Arrays vs Collections
-// Not resizable - Dynamically sized
-// Stores primitives or objects - stores only objects
-// elements must be of same type - can store different types of elements
-// [] to access elements - uses methods to access elements
-// {} syntax for initialization - constructor for initialization
+// Not resizable ------------------- Dynamically sized
+// Stores primitives or objects --- stores only objects
+// elements must be of same type -- can store different types of elements
+// [] to access elements ----------- uses methods to access elements
+// {} syntax for initialization ---- constructor for initialization
 
 /** Demonstrates basic differences between arrays and ArrayList. */
 public class ArrayListExample {
