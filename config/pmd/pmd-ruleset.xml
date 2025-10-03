@@ -7,12 +7,13 @@
     <description>Custom PMD ruleset for Java learning examples</description>
 
     <!-- Best Practices -->
-    <rule ref="category/java/bestpractices.xml/Logger"/>
     <rule ref="category/java/bestpractices.xml">
         <!-- Allow System.out.println for learning examples -->
         <exclude name="SystemPrintln"/>
         <!-- Allow public main methods -->
         <exclude name="UseVarargs"/>
+        <!-- Allow logging without explicit log level guards in examples -->
+        <exclude name="GuardLogStatement"/>
     </rule>
 
     <!-- Code Style -->

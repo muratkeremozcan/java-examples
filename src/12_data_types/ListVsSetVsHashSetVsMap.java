@@ -65,7 +65,7 @@ public class ListVsSetVsHashSetVsMap {
   /** Highlights fixed-capacity FIFO behaviour with ArrayBlockingQueue. */
   @SuppressWarnings("PMD.LooseCoupling")
   private static void demoArrayBlockingQueue() {
-    var heightsQueue =  new ArrayBlockingQueue<Integer>(3);
+    var heightsQueue = new ArrayBlockingQueue<Integer>(3);
     heightsQueue.add(72);
     heightsQueue.add(64);
     heightsQueue.add(66); // queue now at capacity
