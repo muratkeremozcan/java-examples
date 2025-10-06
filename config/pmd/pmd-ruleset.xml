@@ -47,10 +47,16 @@
         <exclude name="EmptyCatchBlock"/>
         <!-- Allow repeated demo strings in examples -->
         <exclude name="AvoidDuplicateLiterals"/>
+        <!-- Allow try-less IO snippets and simple loop assignments in learning materials -->
+        <exclude name="CloseResource"/>
+        <exclude name="AssignmentInOperand"/>
     </rule>
 
     <!-- Performance -->
-    <rule ref="category/java/performance.xml"/>
+    <rule ref="category/java/performance.xml">
+        <!-- Permit FileReader/FileWriter in introductory examples -->
+        <exclude name="AvoidFileStream"/>
+    </rule>
 
     <!-- Security -->
     <rule ref="category/java/security.xml"/>
