@@ -12,7 +12,7 @@ public class AllTheCities {
    * utilities.
    */
   public static void main(String[] args) {
-    String[] euCapitals = {"Paris", "London", "Prague"};
+    final String[] euCapitals = {"Paris", "London", "Prague"};
     // ArrayList<String> capitals = new ArrayList<String>(); // NOPMD - example needs concrete type
     var capitals = new ArrayList<String>(); // preferred newer way
 
@@ -25,13 +25,13 @@ public class AllTheCities {
     // Element updates reflect in euCapitals, but add/remove throw UnsupportedOperationException.
     // final List<String> euCapitalsList = Arrays.asList(euCapitals);
     var euCapitalsList = Arrays.asList(euCapitals); // preferred newer way
+    System.out.println(euCapitalsList);
 
     // In-place sort and reverse on the same list to highlight mutating utility methods.
     Collections.sort(capitals);
     Collections.reverse(capitals);
 
     System.out.println(capitals);
-    System.out.println(euCapitalsList);
 
     // Printing the bare array would call Object.toString and show its memory reference;
     // Arrays.toString produces a readable list instead.
