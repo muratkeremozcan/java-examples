@@ -13,18 +13,16 @@ class DirectoryManager {
   /** Creates a directory, writes a note, and logs path information. */
   public static void main(String[] args) {
     try {
-      // Create a directory
-      final File notesDir = new File("notes");
+      final File notesDir = new File("src/14_IO/notes");
       if (notesDir.mkdir()) {
         LOGGER.info("Directory 'notes' created successfully");
       }
 
-      final File noteFile = new File("notes/note.txt");
+      final File noteFile = new File("src/14_IO/notes/note.txt");
       if (noteFile.createNewFile()) {
         LOGGER.info("File 'note.txt' created successfully");
       }
 
-      // List contents of the directory
       final File[] files = notesDir.listFiles();
       if (files != null) {
         for (File f : files) {
