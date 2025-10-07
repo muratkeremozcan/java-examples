@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
-/** Java's file classes are used for reading and writing files */
+/** Java's file classes are used for reading and writing files. */
 class FileReadWrite {
   private static final Logger LOGGER = Logger.getLogger(FileReadWrite.class.getName());
 

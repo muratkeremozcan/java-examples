@@ -6,10 +6,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
-/** Java's buffered classes help read and write large chunks of text efficiently */
+/** Java's buffered classes help read and write large chunks of text efficiently. */
 public class FileOperations {
   private static final Logger LOGGER = Logger.getLogger(FileOperations.class.getName());
 
+  /** Demonstrates buffered reading and writing using the same backing file. */
   public static void main(String[] args) {
     try {
       // KEY: BufferedWriter is useful when writing multiple lines to a file
