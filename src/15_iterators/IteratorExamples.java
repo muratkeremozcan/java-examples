@@ -11,8 +11,8 @@ import java.util.logging.Logger;
  * - A {@link java.util.ListIterator} is list-only but adds the extras: set existing values, insert
  * new ones, walk backwards, and surface indexes.
  */
-public class CityDisplay {
-  private static final Logger LOGGER = Logger.getLogger(CityDisplay.class.getName());
+public class IteratorExamples {
+  private static final Logger LOGGER = Logger.getLogger(IteratorExamples.class.getName());
   private static final int MINIMUM_VALUE_TO_KEEP = 25;
   private static final String NAME_TO_UPDATE = "Jon";
   private static final String ERROR_TOKEN = "error";
