@@ -17,6 +17,7 @@ public class IteratorExamples {
   private static final String NAME_TO_UPDATE = "Jon";
   private static final String ERROR_TOKEN = "error";
 
+  /** Executes each iterator flavor demo back-to-back for easy comparison. */
   public static void main(String[] args) {
     demoForEach();
     demoIterator();
