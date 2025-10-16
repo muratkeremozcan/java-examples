@@ -19,6 +19,10 @@ public class StreamExamples {
 
   private static final Logger LOGGER = Logger.getLogger(StreamExamples.class.getName());
 
+  /**
+   * Runs each miniature stream scenario so you can compare sequential, filtered, collected, and
+   * parallel pipelines in one go.
+   */
   public static void main(String[] args) {
     demoForEach();
     demoFilterAndCount();
