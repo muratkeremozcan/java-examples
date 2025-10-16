@@ -1,24 +1,15 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-/**
- * Lightweight intro to {@link java.time.LocalDate}, the modern replacement for the legacy {@code
- * java.util.Date} API.
- */
+/** Lightweight intro to {@link java.time.LocalDate}. */
 public class DateExample {
 
-  /**
-   * Kicks off the demo—Chrono API calls are static, so keeping main tiny makes the example easy to
-   * copy.
-   */
+  /** Kickstarts the sample by calling {@link #printDate()}. */
   public static void main(String[] args) {
     printDate();
   }
 
-  /**
-   * Grabs today's date, formats it with a pattern, and shows parsing. These are the
-   * bread-and-butter operations when migrating from string-based date handling.
-   */
+  /** Shows formatting and parsing without the old {@code java.util.Date} API. */
   public static void printDate() {
     LocalDate date = LocalDate.now();
     System.out.println("current date in default format: " + date);
@@ -30,10 +21,7 @@ public class DateExample {
     System.out.println("parse(): " + parseDate);
   }
 
-  /**
-   * Shows common date math—no mutable calendars, just fluent calls. Handy when porting code from
-   * imperative date arithmetic.
-   */
+  /** Performs simple date arithmetic with immutable {@link LocalDate}. */
   public static void dateArithmetic() {
     LocalDate today = LocalDate.now();
 

@@ -1,18 +1,14 @@
-/**
- * Quick tour of enums: directional constants and HTTP status codes in a single place.
- *
- * <p>Why it matters: enums give type-safe labels instead of loose strings or ints, making switch
- * statements and domain checks a lot safer.
- */
+/** Simple enum demo: directional labels plus HTTP status codes. */
+@SuppressWarnings("PMD.CommentDefaultAccessModifier")
 public class EnumDemo {
 
-  /** demo */
+  /** Entry point that prints a direction and status code. */
   public static void main(String[] args) {
     printDirection(Direction.EAST);
     System.out.println(HttpStatus.OK.getCode());
   }
 
-  /** simple enum */
+  /** Compass directions as an enum. */
   private enum Direction {
     NORTH,
     EAST,
@@ -20,13 +16,14 @@ public class EnumDemo {
     WEST
   }
 
+  /** Logs whichever direction was supplied. */
   private static void printDirection(final Direction direction) {
     System.out.println("Direction: " + direction);
   }
 
   /////////
 
-  /** Enums with custom state and methods. */
+  /** Minimal HTTP status catalog to show enums with state. */
   private enum HttpStatus {
     OK(200),
     NOT_FOUND(404);
