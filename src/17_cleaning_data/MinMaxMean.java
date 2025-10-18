@@ -28,6 +28,9 @@ public class MinMaxMean {
     System.out.printf("Median amount: $%.2f%n", stats.getPercentile(50)); // median
     System.out.printf(
         "Normal range: $%.2f - $%.2f%n", stats.getPercentile(25), stats.getPercentile(75));
-    System.out.printf("Standard deviation: $%.2f%n", stats.getStandardDeviation()); // Standard deviation says how spread out the numbers are around the average
+    System.out.printf(
+        "Standard deviation: $%.2f%n",
+        stats.getStandardDeviation()); // Standard deviation says how spread out the numbers are
+    // around the average
   }
 }
