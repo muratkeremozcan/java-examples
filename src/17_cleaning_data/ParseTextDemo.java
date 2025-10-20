@@ -2,16 +2,26 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
 
-/** Quick demo: parse dates and dollar amounts from plain strings. */
+/**
+ * Key takeaways:
+ *
+ * <ul>
+ *   <li>Define a DateTimeFormatter when you need to coerce loosely formatted dates.
+ *   <li>Lean on Apache Commons' NumberUtils to sanity-check strings before parsing.
+ *   <li>Strip noisy characters (like $) before converting text into numeric types.
+ *   <li>NumberUtils.isParsable() checks if a string can be parsed into a number.
+ * </ul>
+ */
 public class ParseTextDemo {
-  // Formatter matches inputs like 1/10/23 (month/day/two-digit-year).
   private static LocalDate parseDate(final String dateStr) {
+    // DateTimeFormatter.ofPattern() defines the expected format
     DateTimeFormatter format = DateTimeFormatter.ofPattern("M/d/yy");
     return LocalDate.parse(dateStr, format);
   }
 
   // Strip the dollar sign then use Apache helpers to coerce into a double.
   private static double parseAmount(final String amount) {
+    // NumberUtils.toDouble() to convert a string to a double
     return NumberUtils.toDouble(amount.replace("$", "").trim());
   }
 
@@ -22,6 +32,7 @@ public class ParseTextDemo {
 
     String amount = "$30.61";
     // Check if the amount looks like a number before we convert it.
+    // NumberUtils.isParsable() checks if a string can be parsed into a number
     boolean isAmountParsable = NumberUtils.isParsable(amount);
     System.out.println("Is amount parsable? " + isAmountParsable);
 
