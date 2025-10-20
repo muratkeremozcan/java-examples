@@ -3,11 +3,13 @@ import java.util.Arrays;
 import java.util.List;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
+/** Summarize coffee sales by computing min, max, and mean amounts. */
 public class MinMaxMean {
   // Record is just a compact, immutable data bundle—think readonly TS object with auto getters.
   private record CoffeeSales(
       LocalDate date, String coffeeName, String paymentMethod, int quantity, double amount) {}
 
+  /** Load sample data, feed a stats helper, and print the key metrics. */
   public static void main(String[] args) {
     // Use a List so we get helpers like forEach; Java arrays stay low-level index/length only.
     List<CoffeeSales> sales =

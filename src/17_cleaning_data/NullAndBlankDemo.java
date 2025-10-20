@@ -18,17 +18,19 @@ import java.util.Objects;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 
+/** Show quick checks for null vs blank string data in sales records. */
 public class NullAndBlankDemo {
-  
+
+  /** Run both null and blank validation demos. */
   public static void main(String[] args) {
     nullDemo();
     blankDemo();
   }
-  
+
   // Record is just a compact, immutable data bundle—think readonly TS object with auto getters.
   private record CoffeeSales(
       LocalDate date, String coffeeName, String paymentMethod, Integer quantity, Double amount) {}
-      
+
   private static void nullDemo() {
     CoffeeSales sale = new CoffeeSales(LocalDate.of(2024, 3, 1), "Latte", "cash", null, null);
 
