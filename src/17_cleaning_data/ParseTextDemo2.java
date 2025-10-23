@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
- * Key takeaways:
+ * Key takeaways.
  *
  * <ul>
  *   <li>Shape parsed rows into the CoffeeSales record so later code stays type-safe.
