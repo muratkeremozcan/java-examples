@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
 
 /**
- * Key takeaways:
+ * Key takeaways.
  *
  * <ul>
  *   <li>Define a DateTimeFormatter when you need to coerce loosely formatted dates.
