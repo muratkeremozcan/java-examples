@@ -104,6 +104,11 @@ make spotbugs         # Run SpotBugs bug detection (auto-opens report)
 make pmd              # Run PMD code quality checks (auto-opens report)
 ```
 
+### VS Code run button
+
+- Run `./gradlew syncBin` (or any Gradle build) after pulling so `bin/main` mirrors the latest classes.
+- Use `./gradlew runSimple -Pexample=<folder/ClassName>` for CLI runs; the VS Code ▶ button uses the same compiled output.
+
 ## Git Hooks (Automatic Quality Checks)
 
 This project includes Git hooks that automatically run quality checks before each commit:
