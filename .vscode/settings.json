@@ -12,7 +12,7 @@
   "java.import.gradle.enabled": true,
   "java.import.gradle.wrapper.enabled": true,
   "java.project.sourcePaths": ["src"],
-  "java.project.outputPath": "build/classes",
+  "java.project.outputPath": "build/classes/java/main",
   "files.exclude": {
     "**/build": true,
     "**/.gradle": true
