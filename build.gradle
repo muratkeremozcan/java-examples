@@ -153,9 +153,10 @@ tasks.register('quickRun') {
 
 // Simple run by folder/filename (no packages needed)
 tasks.register('runSimple', {
-	group = 'application'
-	description = 'Run example by folder/filename (e.g., ./gradlew -Pexample=01_intro/WelcomeToJava runSimple)'
-	doLast {
+    group = 'application'
+    description = 'Run example by folder/filename (e.g., ./gradlew -Pexample=01_intro/WelcomeToJava runSimple)'
+    dependsOn 'classes'
+    doLast {
 		def example = project.findProperty('example')
 		if (!example) {
 			throw new GradleException("Please specify example: ./gradlew -Pexample=folder/filename runSimple")
@@ -177,19 +178,31 @@ tasks.register('runSimple', {
 		
 		println "Running: $sourceFile"
 		
-		// Compile and run without packages
-		ant.mkdir(dir: "$buildDir/tmp")
-		ant.javac(srcdir: 'src', destdir: "$buildDir/tmp", includeantruntime: false)
-		
-		// Extract class name from filename
-		def className = filename.replaceAll('\\.java$', '')
-		
-		javaexec {
-			classpath = files("$buildDir/tmp")
-			mainClass = className
-		}
-	}
+        // Extract class name from filename
+        def className = filename.replaceAll('\\.java$', '')
+        def runtimeClasspath = sourceSets.main.runtimeClasspath
+
+        javaexec {
+            classpath = runtimeClasspath
+            mainClass = className
+        }
+    }
 })
+
+// Keep VS Code's default launch classpath (bin/main) populated with the compiled classes.
+tasks.register('syncBin', Copy) {
+    dependsOn 'classes'
+    from layout.buildDirectory.dir('classes/java/main')
+    into layout.projectDirectory.dir('bin/main')
+}
+
+tasks.named('classes') {
+    finalizedBy 'syncBin'
+}
+
+tasks.named('runSimple') {
+    finalizedBy 'syncBin'
+}
 
 // List examples in a simpler format
 tasks.register('listSimple') {

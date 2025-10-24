@@ -25,7 +25,8 @@ public class ParseTextDemo2 {
 
   // DateTimeFormatter.ofPattern() matches inputs like 1/10/23
   private static LocalDate parseDate(final String dateStr) {
-    return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("M/d/yy"));
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("M/d/yy");
+    return LocalDate.parse(dateStr, format);
   }
 
   // NumberUtils.isParsable() fails fast if the CSV column is not numeric.
@@ -38,9 +39,10 @@ public class ParseTextDemo2 {
 
   /** Strip the currency symbol and convert the cleaned price text into a double. */
   public static double parsePrice(final String priceText) {
-    if (NumberUtils.isParsable(priceText.replace("$", ""))) {
-      // Double.parseDouble() runs once the currency symbol is gone.
-      return Double.parseDouble(priceText.replace("$", ""));
+    String cleanPrice = priceText.replace("$", "");
+    // check if the value is parsable with NumberUtils.isParsable()
+    if (NumberUtils.isParsable(cleanPrice)) {
+      return Double.parseDouble(cleanPrice);
     }
     throw new IllegalArgumentException("Invalid price: " + priceText);
   }
@@ -60,15 +62,18 @@ public class ParseTextDemo2 {
   public static void main(String[] args) throws IOException, InterruptedException {
     List<CoffeeSales> sales = new ArrayList<>();
     String filename = "src/17_cleaning_data/coffee.csv";
+
     try (BufferedReader reader =
         Files.newBufferedReader(Path.of(filename), StandardCharsets.UTF_8)) {
       reader.readLine(); // Skip header row
+
       String line;
-      while ((line = reader.readLine()) != null) {
-        String[] fields = line.split(",");
-        sales.add(parseSalesData(fields));
+
+      while ((line = reader.readLine()) != null) { // read until the end of the file
+        String[] fields = line.split(","); // split csv line into array
+        sales.add(parseSalesData(fields)); // covert fields into record
       }
     }
-    sales.forEach(System.out::println);
+    sales.forEach(System.out::println); // :: is a shorthand to pass a method as a parameter
   }
 }
