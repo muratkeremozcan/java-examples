@@ -48,11 +48,13 @@ public class DateStandardizationExample {
   }
 
   private static void formatDatesExample2() {
-    	LocalDate date1 = LocalDate.parse("1/1/23", DateTimeFormatter.ofPattern("M/d/yy"));
-        // Specify the format of date2 with zero-padded month/day
-        LocalDate date2 = LocalDate.parse("07-01-2023", DateTimeFormatter.ofPattern("MM-dd-yyyy"));
-        // Extract the month and year from date1 and date2
-        System.out.println("Month and year of " + date1 + ": " + date1.getMonth() + " " + date1.getYear());
-        System.out.println("Month and year of " + date2 + ": " + date2.getMonth() + " " + date2.getYear());
+    LocalDate date1 = LocalDate.parse("1/1/23", DateTimeFormatter.ofPattern("M/d/yy"));
+    // Specify the format of date2 with zero-padded month/day
+    LocalDate date2 = LocalDate.parse("07-01-2023", DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+    // Extract the month and year from date1 and date2
+    System.out.println(
+        "Month and year of " + date1 + ": " + date1.getMonth() + " " + date1.getYear());
+    System.out.println(
+        "Month and year of " + date2 + ": " + date2.getMonth() + " " + date2.getYear());
   }
 }

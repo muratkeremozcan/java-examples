@@ -93,8 +93,9 @@ public class CategoryMappingDemo {
     //   Flink is Apache’s distributed stream‑processing engine. Think of it as a JVM framework
     // for crunching unbounded event streams (and bounded batch jobs)
     // with strong guarantees—exactly-once state, low-latency processing, windowing, joins, etc.
-    // 
-    // It powers things like fraud detection, personalization, IoT, data ingestion, real-time dashboards
+    //
+    // It powers things like fraud detection, personalization, IoT, data ingestion, real-time
+    // dashboards
     // —any workflow where events never stop arriving and you can’t wait for a daily batch.
     //
     // So when you see Flink beside TypeScript/Python/Java, it usually means:
@@ -103,7 +104,8 @@ public class CategoryMappingDemo {
     // - Services—maybe a legacy Java system—emit events, and Flink jobs clean, enrich, and route
     // them in real time.
     // - TypeScript UIs and Python analytics live at the edges (display dashboards, run models),
-    // but the “always-on” plumbing remains on the JVM for operational reasons (libraries, ops tooling, reliability).
+    // but the “always-on” plumbing remains on the JVM for operational reasons (libraries, ops
+    // tooling, reliability).
 
     // Companies build on top of existing Java infrastructure, then layer newer stacks (TS/Python)
     // where developer productivity matters more than long-lived stream processing.
