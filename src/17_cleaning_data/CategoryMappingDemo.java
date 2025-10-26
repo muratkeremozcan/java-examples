@@ -7,9 +7,9 @@ import java.util.Map;
  * Key takeaways.
  *
  * <ul>
- *   <li>Normalize UI strings into one enum so reports and rules work on real categories.</li>
- *   <li>Absorb typos/casing upfront; Map#getOrDefault gives a safe fallback bucket.</li>
- *   <li>Aggregate raw counts into canonical categories with EnumMap + Map#merge.</li>
+ *   <li>Normalize UI strings into one enum so reports and rules work on real categories.
+ *   <li>Absorb typos/casing upfront; Map#getOrDefault gives a safe fallback bucket.
+ *   <li>Aggregate raw counts into canonical categories with EnumMap + Map#merge.
  * </ul>
  */
 public class CategoryMappingDemo {
@@ -89,3 +89,21 @@ public class CategoryMappingDemo {
     System.out.println("Stock by category:" + stockByCategory);
   }
 }
+
+    //   Flink is Apache’s distributed stream‑processing engine. Think of it as a JVM framework
+    // for crunching unbounded event streams (and bounded batch jobs)
+    // with strong guarantees—exactly-once state, low-latency processing, windowing, joins, etc.
+    // 
+    // It powers things like fraud detection, personalization, IoT, data ingestion, real-time dashboards
+    // —any workflow where events never stop arriving and you can’t wait for a daily batch.
+    //
+    // So when you see Flink beside TypeScript/Python/Java, it usually means:
+    //
+    // - There’s a core data or event pipeline written in Java/Scala (Flink’s native APIs).
+    // - Services—maybe a legacy Java system—emit events, and Flink jobs clean, enrich, and route
+    // them in real time.
+    // - TypeScript UIs and Python analytics live at the edges (display dashboards, run models),
+    // but the “always-on” plumbing remains on the JVM for operational reasons (libraries, ops tooling, reliability).
+
+    // Companies build on top of existing Java infrastructure, then layer newer stacks (TS/Python)
+    // where developer productivity matters more than long-lived stream processing.
