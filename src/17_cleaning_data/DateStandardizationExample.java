@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 /** Normalizes date strings and time zones into consistent formats. */
 public class DateStandardizationExample {
+  /** Run the formatting and time-zone demonstrations. */
   public static void main(String[] args) {
     formatDatesExample();
     zonedDatesExample();
