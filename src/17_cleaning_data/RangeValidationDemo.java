@@ -9,9 +9,9 @@ import org.apache.commons.lang3.Range;
  * Key takeaways.
  *
  * <ul>
- *   <li>Collections.min/max reveal the observed bounds before we validate.</li>
- *   <li>Range.of captures inclusive thresholds so the checks stay readable.</li>
- *   <li>Parse strings to LocalDate, then compare within the allowed launch window.</li>
+ *   <li>Collections.min/max reveal the observed bounds before we validate.
+ *   <li>Range.of captures inclusive thresholds so the checks stay readable.
+ *   <li>Parse strings to LocalDate, then compare within the allowed launch window.
  * </ul>
  */
 public class RangeValidationDemo {
