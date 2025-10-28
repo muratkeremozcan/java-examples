@@ -32,6 +32,7 @@ dependencies {
 	googleJavaFormat 'com.google.googlejavaformat:google-java-format:1.24.0:all-deps'
 	implementation 'org.apache.commons:commons-math3:3.6.1'
 	implementation 'org.apache.commons:commons-lang3:3.14.0'
+	implementation 'com.google.guava:guava:33.3.1-jre'
 }
 
 // Code quality and linting configuration
