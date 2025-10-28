@@ -1,25 +1,29 @@
+import com.google.common.base.CharMatcher;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Regex cheatsheet for later copy/paste.
+ *
  *
  * <ul>
- *   <li>Define pattern d-MMM-VY, like 4-Jan-22: Pattern datePattern = Pattern.compile(regex)</li>
- *   <li>Full pattern matching (does date match datePattern?) 
- *     boolean matchesPattern = datePattern.matcher(date).matches()</li>
- *   <li>Pattern finding (does date have a month substring?) 
- *      boolean hasMonth = Pattern.compile(regex).matcher(date).find();</li>
- *   <li>Character matching (does date have digits?) 
- *      boolean hasDigits = CharMatcher.digit().matchesAny0f(date);</li>
+ *   <li>Define pattern d-MMM-VY, like 4-Jan-22: Pattern datePattern = Pattern.compile(regex)
+ *   <li>Full pattern matching (does date match datePattern?) boolean matchesPattern =
+ *       datePattern.matcher(date).matches()
+ *   <li>Pattern finding (does date have a month substring?) boolean hasMonth =
+ *       Pattern.compile(regex).matcher(date).find();
+ *   <li>Character matching (does date have digits?) boolean hasDigits =
+ *       CharMatcher.digit().matchesAny0f(date);
+ *   <li>CharMatcher.digit().retainFrom(input) // grab only digits from messy strings
  * </ul>
  */
 public class PatternValidation {
+  /** Run the regex and CharMatcher demonstrations. */
   public static void main(String[] args) {
     validatePurchaseDates();
     extractPlatformVersions();
+    vetQuantityCharacters();
   }
 
   /** Validate that dates follow an expected MM/DD/YYYY style. */
@@ -45,11 +49,31 @@ public class PatternValidation {
       Matcher matcher = singleDigit.matcher(platform);
       // find() scans for the first occurrence without rejecting non-digit prefixes/suffixes.
       if (matcher.find()) {
-        // group() surfaces whatever substring satisfied the pattern (here, the console version).
-        System.out.println(platform + ": version " + matcher.group());
+        // jdk 21: digit() covers BMP digits; ASCII is enough for these console labels.
+        String digitsOnly = CharMatcher.inRange('0', '9').retainFrom(platform);
+        // group() surfaces the first match; digitsOnly keeps the full numeric suffix if present.
+        System.out.println(platform + ": version " + digitsOnly);
       } else {
         System.out.println(platform + ": no version number");
       }
+    }
+  }
+
+  /** Quick CharMatcher checks for numeric strings that allow decimals only. */
+  private static void vetQuantityCharacters() {
+    List<String> quantities = Arrays.asList("41.49", "29.08", "15.85", "12.5x");
+
+    for (String quantity : quantities) {
+      // inRange('0','9') ensures at least one digit shows up (filters blank/symbol-only input).
+      boolean hasDigit = CharMatcher.inRange('0', '9').matchesAnyOf(quantity);
+      // simple decimal guard; CharMatcher#is avoids tiny regexes when one character matters.
+      boolean hasDecimalPoint = CharMatcher.is('.').matchesAnyOf(quantity);
+      // Combine ranges with or() to flag any alphabetic noise in price fields.
+      boolean hasAlpha =
+          CharMatcher.inRange('a', 'z').or(CharMatcher.inRange('A', 'Z')).matchesAnyOf(quantity);
+
+      boolean isValid = hasDigit && hasDecimalPoint && !hasAlpha;
+      System.out.println(quantity + " has valid characters: " + isValid);
     }
   }
 }
