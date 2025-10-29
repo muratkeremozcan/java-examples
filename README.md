@@ -109,6 +109,25 @@ make pmd              # Run PMD code quality checks (auto-opens report)
 - Run `./gradlew syncBin` (or any Gradle build) after pulling so `bin/main` mirrors the latest classes.
 - Use `./gradlew runSimple -Pexample=<folder/ClassName>` for CLI runs; the VS Code ▶ button uses the same compiled output.
 
+### Adding Java dependencies (npm install equivalent)
+
+Java projects pull dependencies with Gradle instead of npm. To add a library:
+
+1. Edit `build.gradle` and add the coordinate under the `dependencies` block, e.g.
+   ```gradle
+   dependencies {
+       implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
+       implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
+   }
+   ```
+2. Sync / fetch the jars by running `./gradlew build` (or any Gradle command). Gradle downloads
+   the artifacts into `~/.gradle/caches` the first time they’re requested.
+3. Use the new types in your code, then rerun `./gradlew checkstyleMain` or `./gradlew test` to
+   verify.
+
+Need a transitive dependency (similar to npm peer deps)? Add more `implementation` lines. For
+compile-only APIs use `compileOnly`, for annotation processors `annotationProcessor`, etc.
+
 ## Git Hooks (Automatic Quality Checks)
 
 This project includes Git hooks that automatically run quality checks before each commit:
