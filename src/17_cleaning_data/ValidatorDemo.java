@@ -12,11 +12,11 @@ import java.util.Set;
  *
  * <ul>
  *   <li>Annotate fields with constraints (e.g., {@code @NotNull}, {@code @Min}) instead of manual
- *       if-checks.</li>
+ *       if-checks.
  *   <li>Ask the shared {@link Validator} for violations; it returns a set describing every broken
- *       rule.</li>
+ *       rule.
  *   <li>Surface problems early—log them, throw, or map them to an HTTP 400—before dirty data keeps
- *       flowing.</li>
+ *       flowing.
  * </ul>
  */
 public class ValidatorDemo {
@@ -50,10 +50,7 @@ public class ValidatorDemo {
     private final Double sales;
 
     private GameSale(
-        final String name,
-        final String platform,
-        final Integer year,
-        final Double sales) {
+        final String name, final String platform, final Integer year, final Double sales) {
       this.name = name;
       this.platform = platform;
       this.year = year;
