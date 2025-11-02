@@ -1,27 +1,33 @@
+import static tech.tablesaw.aggregate.AggregateFunctions.sum;
+
 import java.util.Locale;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
+import tech.tablesaw.selection.Selection;
 
 /**
- * Tablesaw cheatsheet.
- *
  * <ul>
  *   <li>{@code Table.read().csv(path)} // load CSV into a typed table
  *   <li>{@code table.column(colName).countMissing()} // quick null counter per column
  *   <li>{@code table.countBy("Category")} // group + tally without writing SQL
  *   <li>{@code table.doubleColumn("Unit_Price").summary()} // numeric stats without pandas
- *   <li>{@code table.stringColumn("Product_Name").map(...)} // vectorised string cleanup
+ *   <li>{@code table.stringColumn("Product_Name").map(...)} // vectorized string cleanup
+ *   <li>{@code table.where(selA.and(selB))} // merge predicates before filtering
+ *   <li>{@code table.where(...).summarize(col, sum).by("Category")} // WHERE → SUM → GROUP BY chain
  * </ul>
  */
 public class TabDataDemo {
+  /** Run demos covering quality, cleaning, and filtering tasks. */
   public static void main(String[] args) {
     dataQualityDemo();
     dataCleaningDemo();
+    dataFilteringDemo();
+    dataAggregationDemo();
   }
 
   private static void dataQualityDemo() {
-    Table table = Table.read().csv("src/18_cleaning_tabular_data/grocery_inventory.csv");
+    Table table = Table.read().csv("src/17_cleaning_data/grocery_inventory.csv");
 
     for (String colName : table.columnNames()) {
       // table.column(colName).countMissing() acts like COUNT(*) FILTER (WHERE value IS NULL)
@@ -49,7 +55,7 @@ public class TabDataDemo {
 
   /** Walk column metadata and compute derived values for tabular cleanup. */
   private static void dataCleaningDemo() {
-    Table table = Table.read().csv("src/18_cleaning_tabular_data/grocery_inventory.csv");
+    Table table = Table.read().csv("src/17_cleaning_data/grocery_inventory.csv");
 
     System.out.println("Column data types:");
     for (String columnName : table.columnNames()) {
@@ -89,5 +95,39 @@ public class TabDataDemo {
 
     System.out.println("Example name before cleaning: " + names.get(0));
     System.out.println("Example name after cleaning: " + standardizedNames.get(0));
+  }
+
+  /** Filter rows using Selection predicates and sort the results. */
+  private static void dataFilteringDemo() {
+    Table inventory = Table.read().csv("src/17_cleaning_data/grocery_inventory.csv");
+
+    // Build a Selection for rows where quantity > 50.
+    Selection highQuantity = inventory.intColumn("Stock_Quantity").isGreaterThan(50);
+    // Chain a string match; Selection#and composes filters like WHERE a AND b.
+    Selection fruitsAndVegetables =
+        inventory.stringColumn("Category").isEqualTo("Fruits & Vegetables");
+
+    Table highQuantityTable =
+        inventory.where(highQuantity.and(fruitsAndVegetables)).sortDescendingOn("Stock_Quantity");
+
+    System.out.println("High quantity fruits and vegetables:");
+    System.out.println(highQuantityTable.selectColumns("Product_Name", "Stock_Quantity").first(10));
+  }
+
+  /** Aggregate stock quantities by category after applying a price filter. */
+  private static void dataAggregationDemo() {
+    Table inventory = Table.read().csv("src/17_cleaning_data/grocery_inventory.csv");
+
+    Table quantityByCategory =
+        inventory
+            // where(...) narrows the table to expensive items before aggregating.
+            .where(inventory.doubleColumn("Unit_Price").isGreaterThan(5.0))
+            // summarize(col, sum) adds a SUM column to the running aggregation table.
+            .summarize("Stock_Quantity", sum)
+            // by("Category") finalizes the aggregation by grouping on category.
+            .by("Category");
+
+    System.out.println("Total quantity by category:");
+    System.out.println(quantityByCategory.first(5));
   }
 }
