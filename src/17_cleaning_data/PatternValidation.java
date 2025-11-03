@@ -5,17 +5,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
+ * Regex + CharMatcher cheatsheet.
  *
  * <ul>
- *   <li>Define pattern d-MMM-VY, like 4-Jan-22: Pattern datePattern = Pattern.compile(regex)
- *   <li>Full pattern matching (does date match datePattern?) boolean matchesPattern =
- *       datePattern.matcher(date).matches()
- *   <li>Pattern finding (does date have a month substring?) boolean hasMonth =
- *       Pattern.compile(regex).matcher(date).find();
- *   <li>Character matching (does date have digits?) boolean hasDigits =
- *       CharMatcher.digit().matchesAny0f(date);
- *   <li>CharMatcher.digit().retainFrom(input) // grab only digits from messy strings
+ *   <li>{@code Pattern.compile("\\d{1,2}/\\d{1,2}/\\d{4}");} // MM/DD/YYYY matcher</li>
+ *   <li>{@code matcher.matches();} // require the whole string to match</li>
+ *   <li>{@code matcher.find(); matcher.group();} // pull the first matching substring</li>
+ *   <li>{@code CharMatcher.inRange('0','9').retainFrom(input);} // keep only ASCII digits</li>
+ *   <li>{@code CharMatcher.is('.').matchesAnyOf(input);} // cheap single-character check</li>
  * </ul>
  */
 public class PatternValidation {
@@ -47,11 +44,10 @@ public class PatternValidation {
 
     for (String platform : platforms) {
       Matcher matcher = singleDigit.matcher(platform);
-      // find() scans for the first occurrence without rejecting non-digit prefixes/suffixes.
+      // find() tells us whether any digit exists (PlayStation 5, etc.).
       if (matcher.find()) {
-        // jdk 21: digit() covers BMP digits; ASCII is enough for these console labels.
+        // Retain only ASCII digits so the suffix is easy to log or compare.
         String digitsOnly = CharMatcher.inRange('0', '9').retainFrom(platform);
-        // group() surfaces the first match; digitsOnly keeps the full numeric suffix if present.
         System.out.println(platform + ": version " + digitsOnly);
       } else {
         System.out.println(platform + ": no version number");

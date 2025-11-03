@@ -7,7 +7,7 @@ import tech.tablesaw.api.Table;
 import tech.tablesaw.selection.Selection;
 
 /**
- *
+ * Tablesaw cheatsheet.
  *
  * <ul>
  *   <li>{@code Table.read().csv(path)} // load CSV into a typed table
