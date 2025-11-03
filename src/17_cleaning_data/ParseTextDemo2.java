@@ -25,12 +25,14 @@ public class ParseTextDemo2 {
 
   // DateTimeFormatter.ofPattern() matches inputs like 1/10/23
   private static LocalDate parseDate(final String dateStr) {
+    // DateTimeFormatter.ofPattern() defines the expected format
     DateTimeFormatter format = DateTimeFormatter.ofPattern("M/d/yy");
     return LocalDate.parse(dateStr, format);
   }
 
   // NumberUtils.isParsable() fails fast if the CSV column is not numeric.
   private static String validateNumeric(final String value) {
+    // NumberUtils.isParsable() checks if a string can be parsed into a number
     if (NumberUtils.isParsable(value)) {
       return value;
     }
@@ -40,7 +42,7 @@ public class ParseTextDemo2 {
   /** Strip the currency symbol and convert the cleaned price text into a double. */
   public static double parsePrice(final String priceText) {
     String cleanPrice = priceText.replace("$", "");
-    // check if the value is parsable with NumberUtils.isParsable()
+    // NumberUtils.isParsable() checks if a string can be parsed into a number
     if (NumberUtils.isParsable(cleanPrice)) {
       return Double.parseDouble(cleanPrice);
     }
@@ -64,6 +66,7 @@ public class ParseTextDemo2 {
     String filename = "src/17_cleaning_data/coffee.csv";
 
     try (BufferedReader reader =
+        // Files.newBufferedReader(..., UTF_8) avoids default-encoding surprises.
         Files.newBufferedReader(Path.of(filename), StandardCharsets.UTF_8)) {
       reader.readLine(); // Skip header row
 
