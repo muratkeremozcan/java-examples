@@ -1,12 +1,14 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Quadratic-time sort check demo.
  *
  * <ul>
- *   <li>Nested loops mean O(n^2) comparisons; list size doubles → work quadruples.
- *   <li>Great for visualizing why you replace double loops with smarter algorithms.
+ *   <li>Nested loops mean O(n^2) comparisons; list size doubles → work quadruples.</li>
+ *   <li>Great for visualizing why you replace double loops with smarter algorithms.</li>
+ *   <li>Switch to a single-pass scan when you only need to verify non-decreasing order.</li>
  * </ul>
  */
 public final class OnSqExample {
@@ -26,14 +28,22 @@ public final class OnSqExample {
     unsortedNumbers.set(arraySize - 1, unsortedNumbers.get(arraySize - 2));
     unsortedNumbers.set(arraySize - 2, temp);
 
-    boolean result = SortChecker.isSorted(unsortedNumbers);
-    System.out.println("Unsorted array result: " + result);
+    boolean quadraticResult = SortChecker.isSortedQuadratic(unsortedNumbers);
+    boolean linearResult = SortChecker.isSortedLinear(unsortedNumbers);
+    System.out.println("Unsorted array, quadratic check: " + quadraticResult);
+    System.out.println("Unsorted array, linear check: " + linearResult);
+
+    List<Integer> sortedNumbers = new ArrayList<>(unsortedNumbers);
+    Collections.sort(sortedNumbers);
+    System.out.println(
+        "Sorted array, linear check: " + SortChecker.isSortedLinear(sortedNumbers));
   }
 
   /** Utility for quadratic-order sortedness checks. */
   private static final class SortChecker {
 
-    private static boolean isSorted(final List<Integer> numbers) {
+    // O(n^2) double loop: compares every pair.
+    private static boolean isSortedQuadratic(final List<Integer> numbers) {
       boolean sorted = true;
       for (Integer left : numbers) {
         for (Integer right : numbers) {
@@ -45,6 +55,20 @@ public final class OnSqExample {
         if (!sorted) {
           break;
         }
+      }
+      return sorted;
+    }
+
+    // O(n) single pass: bail on first inversion.
+    private static boolean isSortedLinear(final List<Integer> numbers) {
+      boolean sorted = true;
+      Integer previous = null;
+      for (Integer current : numbers) {
+        if (previous != null && previous > current) {
+          sorted = false;
+          break;
+        }
+        previous = current;
       }
       return sorted;
     }
