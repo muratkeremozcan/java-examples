@@ -10,7 +10,7 @@ import java.util.Map;
  *   <li>Linear search in an ArrayList is O(n); every lookup scans the whole list until it finds a
  *       match.
  *   <li>Push more rows through `numberOfContacts` to feel how the runtime grows linearly.
- *   <li>Drop contacts into a HashMap to demonstrate typical-case O(1) lookups.</li>
+ *   <li>Drop contacts into a HashMap to demonstrate typical-case O(1) lookups.
  * </ul>
  */
 public class OnExample {

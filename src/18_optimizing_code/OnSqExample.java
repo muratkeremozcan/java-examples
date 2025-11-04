@@ -6,9 +6,9 @@ import java.util.List;
  * Quadratic-time sort check demo.
  *
  * <ul>
- *   <li>Nested loops mean O(n^2) comparisons; list size doubles → work quadruples.</li>
- *   <li>Great for visualizing why you replace double loops with smarter algorithms.</li>
- *   <li>Switch to a single-pass scan when you only need to verify non-decreasing order.</li>
+ *   <li>Nested loops mean O(n^2) comparisons; list size doubles → work quadruples.
+ *   <li>Great for visualizing why you replace double loops with smarter algorithms.
+ *   <li>Switch to a single-pass scan when you only need to verify non-decreasing order.
  * </ul>
  */
 public final class OnSqExample {
@@ -35,8 +35,7 @@ public final class OnSqExample {
 
     List<Integer> sortedNumbers = new ArrayList<>(unsortedNumbers);
     Collections.sort(sortedNumbers);
-    System.out.println(
-        "Sorted array, linear check: " + SortChecker.isSortedLinear(sortedNumbers));
+    System.out.println("Sorted array, linear check: " + SortChecker.isSortedLinear(sortedNumbers));
   }
 
   /** Utility for quadratic-order sortedness checks. */
