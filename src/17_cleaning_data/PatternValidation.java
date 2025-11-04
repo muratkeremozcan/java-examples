@@ -8,11 +8,11 @@ import java.util.regex.Pattern;
  * Regex + CharMatcher cheatsheet.
  *
  * <ul>
- *   <li>{@code Pattern.compile("\\d{1,2}/\\d{1,2}/\\d{4}");} // MM/DD/YYYY matcher</li>
- *   <li>{@code matcher.matches();} // require the whole string to match</li>
- *   <li>{@code matcher.find(); matcher.group();} // pull the first matching substring</li>
- *   <li>{@code CharMatcher.inRange('0','9').retainFrom(input);} // keep only ASCII digits</li>
- *   <li>{@code CharMatcher.is('.').matchesAnyOf(input);} // cheap single-character check</li>
+ *   <li>{@code Pattern.compile("\\d{1,2}/\\d{1,2}/\\d{4}");} // MM/DD/YYYY matcher
+ *   <li>{@code matcher.matches();} // require the whole string to match
+ *   <li>{@code matcher.find(); matcher.group();} // pull the first matching substring
+ *   <li>{@code CharMatcher.inRange('0','9').retainFrom(input);} // keep only ASCII digits
+ *   <li>{@code CharMatcher.is('.').matchesAnyOf(input);} // cheap single-character check
  * </ul>
  */
 public class PatternValidation {
