@@ -18,7 +18,7 @@ public class MultiThreadExample {
 
   // Why threads? Splitting CPU-heavy work across cores can shorten end-to-end time.
   // We wire them up manually here purely to show the moving parts—
-  // production code would almost always lean on an ExecutorService, ForkJoinPool, 
+  // production code would almost always lean on an ExecutorService, ForkJoinPool,
   // virtual threads, etc., so the platform manages the thread pool lifecycle for us.
   @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
   private static List<Transaction> multiThreadDemo() throws InterruptedException {
@@ -38,7 +38,7 @@ public class MultiThreadExample {
                   processTransaction(transactions.get(i));
                 }
               });
-              
+
       threads.add(thread);
       // Start the thread
       thread.start();
@@ -82,8 +82,8 @@ public class MultiThreadExample {
   /**
    * Same story, but using a parallel stream to show how the JVM handles the thread pool for us.
    * Useful takeaway: parallel streams are opt-in—callers decide when to use them—and they shine for
-   * stateless CPU-bound transforms. You still make an explicit choice to call {@code parallel()}, and
-   * you must keep the per-element work thread-safe.
+   * stateless CPU-bound transforms. You still make an explicit choice to call {@code parallel()},
+   * and you must keep the per-element work thread-safe.
    */
   private static void multiThreadDemo2() {
     List<Image> images = generateImages(500);
