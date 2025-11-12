@@ -11,6 +11,18 @@ import java.util.concurrent.TimeUnit;
  * Shows two common thread-handling patterns you actually use in production: a fixed thread pool for
  * chunking work and a CompletableFuture pipeline for async orchestration. Both highlight that you
  * almost never hand-roll Thread instances once the platform can manage lifecycles for you.
+ *
+ * <p>Layperson comparison vs. JavaScript:
+ *
+ * <ul>
+ *   <li>JS is single-threaded at the language level; async code cooperatively yields back to the
+ *       event loop so nothing blocks. Workers exist but are opt-in—much like Java’s parallel
+ *       streams/executors.
+ *   <li>Java’s model is multi-threaded by default, so blocking calls are fine as long as you use
+ *       managed pools. The demos below are the “real-world” equivalents of JS event-loop tasks:
+ *       one uses an executor (like handing work to worker threads), the other chains async tasks
+ *       via CompletableFuture (similar to JS promises).
+ * </ul>
  */
 public class ThreadExecutorExample {
 
