@@ -6,6 +6,12 @@ import java.util.stream.Collectors;
 public class MultiThreadExample {
   private static double cpuSink;
 
+  /**
+   * Runs both threading demos (manual and parallel stream) and prints aggregated outputs.
+   *
+   * @param args ignored command-line arguments
+   * @throws InterruptedException if any worker join is interrupted
+   */
   public static void main(String[] args) throws InterruptedException {
     List<Transaction> transactions = multiThreadDemo();
     // Summarize the work so SpotBugs sees the results consumed, and we can sanity-check the math.
