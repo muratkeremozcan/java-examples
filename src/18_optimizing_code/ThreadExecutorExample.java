@@ -19,9 +19,9 @@ import java.util.concurrent.TimeUnit;
  *       event loop so nothing blocks. Workers exist but are opt-in—much like Java’s parallel
  *       streams/executors.
  *   <li>Java’s model is multi-threaded by default, so blocking calls are fine as long as you use
- *       managed pools. The demos below are the “real-world” equivalents of JS event-loop tasks:
- *       one uses an executor (like handing work to worker threads), the other chains async tasks
- *       via CompletableFuture (similar to JS promises).
+ *       managed pools. The demos below are the “real-world” equivalents of JS event-loop tasks: one
+ *       uses an executor (like handing work to worker threads), the other chains async tasks via
+ *       CompletableFuture (similar to JS promises).
  * </ul>
  */
 public class ThreadExecutorExample {
