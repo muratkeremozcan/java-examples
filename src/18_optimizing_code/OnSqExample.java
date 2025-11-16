@@ -14,7 +14,7 @@ import java.util.List;
 public final class OnSqExample {
   private OnSqExample() {}
 
-  /** Populate a list and run the quadratic sortedness check. */
+  /** Populate a list and run the quadratic vs linear sortedness checks. */
   public static void main(String[] args) {
     int arraySize = 1000;
 

@@ -2,9 +2,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Tiny LRU cache sketch; shows the usual time-vs-memory trade-off: cached hits are O(1) but you
- * burn memory. Keeping a bounded capacity and evicting the least-recently-used entry prevents the
- * cache from growing without limit.
+ * Tiny LRU (last recently used) cache sketch; shows the usual time-vs-memory trade-off: cached hits
+ * are O(1) but you burn memory. Keeping a bounded capacity and evicting the least-recently-used
+ * entry prevents the cache from growing without limit.
  *
  * <p>DataCamp lesson gist:
  *
@@ -21,6 +21,7 @@ public class CacheExample {
   private final int capacity;
   private final Map<String, CacheEntry> cache = new HashMap<>();
 
+  // constructor overloading: how you do optional parameters in Java
   /** Builds a cache with the default capacity of 100 entries. */
   public CacheExample() {
     this(100);
@@ -30,6 +31,12 @@ public class CacheExample {
   public CacheExample(final int capacity) {
     this.capacity = capacity;
   }
+
+  // TypeScript equivalent using optional parameter
+  // class CacheExample {
+  //   constructor(private capacity: number = 100) {
+  //   }
+  // }
 
   /**
    * Retrieves a value and bumps its access timestamp (so it stays “hot” in the cache).
