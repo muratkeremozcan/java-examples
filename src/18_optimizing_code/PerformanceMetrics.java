@@ -2,8 +2,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 
 /**
- * Walks through simple JVM memory measurements to show how allocations affect the heap in real
- * time.
+ * Plain-English demos for “how much heap is this using?” and “how much CPU did that loop burn?”.
  */
 public class PerformanceMetrics {
 
@@ -12,8 +11,7 @@ public class PerformanceMetrics {
     cpuTimeDemo();
   }
 
-  // Takeaway: allocations that stay referenced keep the heap busy; freeing references lets the GC
-  // reclaim that space. Measuring before/after highlights the true footprint of a structure.
+  // Takeaway: before/after snapshots show how much heap a new structure really costs.
   private static void memoryUsageDemo() {
     double memoryBefore = getUsedMemoryMegabytes();
     System.out.println("Memory before array creation: " + memoryBefore + " MB");
@@ -34,8 +32,8 @@ public class PerformanceMetrics {
     }
   }
 
-  // Takeaway: `totalMemory - freeMemory` approximates live heap usage. Converting to MB keeps the
-  // output readable when experimenting.
+  // Layman tip: `total - free` tells you how much heap is in use; divide by MB to keep numbers
+  // sane.
   private static double getUsedMemoryMegabytes() {
     // Runtime.getRuntime() to retrieve the JVM runtime instance
     Runtime runtime = Runtime.getRuntime();
@@ -44,8 +42,7 @@ public class PerformanceMetrics {
     return usedMemoryBytes / (1024.0 * 1024.0);
   }
 
-  // Takeaway: wall-clock timings can fluctuate, but CPU time isolates how much work the thread
-  // actually performed—perfect for comparing tight loops or algorithm variants.
+  // Takeaway: wall clock lies when other threads interfere; CPU time focuses on this thread’s work.
   private static void cpuTimeDemo() {
     long iterations = 100_000_000L; // 100 million
 

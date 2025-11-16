@@ -8,9 +8,10 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * HashSet: store unique elements with O(1) expected membership tests. HashMap: key-value lookups
- * and updates in O(1), ideal for frequency tallies. Both illustrate trading a bit of memory for
- * linear-time workflows.
+ * HashSet: store unique elements with O(1) membership checks—great when you only care if something
+ * exists. HashMap: still O(1) get/put, but it associates each key with a value (counts, metadata,
+ * etc.). Same Big-O, different purpose: sets answer “do I have X?”, maps answer “what data is tied
+ * to X?”.
  */
 public class HashSetVsMapExample {
   public static void main(String[] args) {

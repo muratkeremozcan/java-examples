@@ -13,10 +13,9 @@ public class PerfDemo {
     runLinearSearchBenchmark();
   }
 
-  // Key takeaway: StringBuilder keeps repeated appends O(n) by reusing the buffer; a naive
-  // concatenation loop would keep allocating new strings and feel dramatically slower. nanoTime
-  // just
-  // gives us evidence for that story.
+  // Layman takeaway: StringBuilder is like pushing onto an array;
+  // concatenating strings is like/ cloning the array every push.
+  // Both read simple, but only one scales.
   private static void runConcatenationBenchmark() {
     // nanoTime is 1/1,000,000,000 of a second
     long startTime = System.nanoTime();
@@ -38,8 +37,8 @@ public class PerfDemo {
     System.out.println("Final string length: " + result.length());
   }
 
-  // Key takeaway: both searches are O(n), but adding even a tiny delay per comparison blows up the
-  // constant factor—mirrors how I/O, locks, or network calls can dwarf algorithmic complexity.
+  // Layman takeaway: both loops scan every number, but slipping in a 1 µs sleep per element blows
+  // up the total time. Same O(n), wildly different constants.
   private static void runLinearSearchBenchmark() {
     int[] array = new int[10_000];
     for (int i = 0; i < array.length; i++) {

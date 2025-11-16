@@ -23,18 +23,19 @@ public class JvmMemoryDemo {
   }
 
   /**
-   * Fills an array by repeatedly assigning the provided value.
+   * Fills an array by cloning the provided value every time (similar to the “inefficient” path in
+   * {@code GarbageCollectorExample}).
    *
    * @param size number of slots to fill
    * @param value string to store in each slot
    * @return array containing the duplicated references
    */
   public static String[] populateArrayInefficient(final int size, final String value) {
-    // Create a new String reference for each iteration: not heap efficient
+    // Create a brand-new String instance for each slot (mimics eager cloning).
     String[] array = new String[size];
 
     for (int i = 0; i < size; i++) {
-      array[i] = value;
+      array[i] = value.concat("");
     }
 
     return array;
@@ -48,11 +49,10 @@ public class JvmMemoryDemo {
    * @return array containing the shared reference
    */
   public static String[] populateArrayEfficient(final int size, final String value) {
-    // create a single String object and reuse it: heap efficient
+    // Reuse the original immutable String instance for every slot (cheap, GC-friendly).
     String[] array = new String[size];
 
     for (int i = 0; i < size; i++) {
-      // Reuse the same String object
       array[i] = value;
     }
 

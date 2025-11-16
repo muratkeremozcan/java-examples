@@ -1,6 +1,5 @@
 /**
- * Demonstrates the trade-off between processing time and memory usage when analyzing datasets of
- * different sizes.
+ * Two tiny demos: single-pass max (O(n), small memory) vs generating all pairs (O(n^2), big mem).
  */
 public class TimeVsMemory {
 

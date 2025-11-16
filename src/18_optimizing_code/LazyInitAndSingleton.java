@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Recaps the DataCamp lesson on lazy initialization and singletons.
+ * Lazy initialization and singletons.
  *
  * <ul>
  *   <li>Delay expensive creation until something actually needs it (lazy database client below).
@@ -11,6 +11,13 @@ import java.util.Map;
  */
 public final class LazyInitAndSingleton {
 
+  /**
+   * Private constructor to prevent direct instantiation. This enforces the singleton pattern by
+   * ensuring the class can only be instantiated from within its own methods (like getInstance()).
+   *
+   * <p>TypeScript equivalent: private constructor() {} Usage: const instance =
+   * LazyInitAndSingleton.getInstance();
+   */
   private LazyInitAndSingleton() {}
 
   /**
@@ -20,7 +27,7 @@ public final class LazyInitAndSingleton {
    */
   public static void main(String[] args) {
     Database database = new Database();
-    database.ensureConnection();
+    database.getClient();
 
     LogManager logManager = LogManager.getInstance();
     logManager.setConfig("level", "INFO");
@@ -42,10 +49,6 @@ public final class LazyInitAndSingleton {
       }
       return client;
     }
-
-    public void ensureConnection() {
-      getClient();
-    }
   }
 
   /**
@@ -59,25 +62,26 @@ public final class LazyInitAndSingleton {
     }
   }
 
-	//////////////////////////////////
-
+  //////////////////////////////////
   /**
    * Singleton log manager mirrors the "one shared Redis cache" solution. Key takeaways:
    *
    * <ul>
    *   <li>Private constructor prevents direct instantiation (everyone must call getInstance()).
-   *   <li>Synchronized accessor guarantees only one instance even under concurrency.
+   *   <li>Synchronized accessor getInstance() guarantees only one instance even under concurrency.
    *   <li>Shared config lives centrally so services reuse it instead of reloading.
    * </ul>
    */
   private static final class LogManager {
-    private static LogManager instance;
-    private final Map<String, String> logConfig;
+    private static LogManager instance; // only one per JVM
+    private final Map<String, String> logConfig; // shared state
 
+    // private constructor to prevent direct instantiation
     private LogManager() {
       logConfig = new HashMap<>();
     }
 
+    // Equivalent of forcing everyone to call RedisCache.getInstance().
     public static synchronized LogManager getInstance() {
       if (instance == null) {
         instance = new LogManager();
@@ -85,10 +89,12 @@ public final class LazyInitAndSingleton {
       return instance;
     }
 
+    // Services call setConfig instead of each loading log settings on their own.
     public synchronized void setConfig(final String key, final String value) {
       logConfig.put(key, value);
     }
 
+    // Just returns the config map so you can see what the singleton holds.
     public synchronized String describeConfig() {
       return logConfig.toString();
     }

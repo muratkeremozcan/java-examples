@@ -3,16 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Benchmark-friendly contact search example for O(n) lookups.
- *
- * <ul>
- *   <li>Linear search in an ArrayList is O(n); every lookup scans the whole list until it finds a
- *       match.
- *   <li>Push more rows through `numberOfContacts` to feel how the runtime grows linearly.
- *   <li>Drop contacts into a HashMap to demonstrate typical-case O(1) lookups.
- * </ul>
- */
+/** Benchmark-friendly demo contrasting O(n) list scans vs. O(1) hash lookups. */
 public class OnExample {
   /** Populate a list of contacts and perform a simple linear search. */
   public static void main(String[] args) {
@@ -34,7 +25,10 @@ public class OnExample {
         "HashMap search result: " + (viaMap != null ? viaMap.getName() : "not found"));
   }
 
-  /** Manages contacts in an ArrayList and exposes simple add/find operations. */
+  /**
+   * Manages contacts in both structures: an ArrayList (for O(n) demonstrations) and a HashMap (for
+   * typical-case O(1) lookups).
+   */
   private static final class ContactManager {
     private final List<Contact> contacts;
     // HashMap provides typical O(1) lookups for known names.
@@ -46,12 +40,15 @@ public class OnExample {
     }
 
     private void addContact(final String name) {
+      // ArrayList part: O(1) append so we can later demonstrate linear scans.
       Contact contact = new Contact(name);
       contacts.add(contact);
+      // HashMap part: O(1) insert so keyed lookups skip the linear scan entirely.
       index.put(name, contact);
     }
 
     private Contact findContactLinear(final String name) {
+      // O(n): we may inspect every contact until we find the match (or finish the list).
       Contact match = null;
       for (Contact contact : contacts) {
         if (contact.getName().equals(name)) {
@@ -64,6 +61,7 @@ public class OnExample {
 
     // HashMap lookup avoids the linear walk for subsequent queries.
     private Contact findContactMap(final String name) {
+      // Average-case O(1): direct hash bucket lookup by key.
       return index.get(name);
     }
   }
