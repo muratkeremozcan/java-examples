@@ -14,7 +14,7 @@ fi
 
 # Run full validation
 echo "2️⃣  Running full validation..."
-make precommit
+make precommit && make test
 if [ $? -ne 0 ]; then
     echo "❌ Pre-commit validation failed. Please fix the issues above and try again."
     echo "💡 You can run 'make lint-verbose' to see detailed violation information."

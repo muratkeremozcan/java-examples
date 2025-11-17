@@ -83,7 +83,7 @@ make health           # Check application health
 
 # Build & Testing
 make build            # Build project (excluding tests)
-make test             # Run tests
+make test             # Run tests (wraps scripts/run-tests.sh -> ./gradlew test)
 make package          # Create JAR file
 make clean            # Clean build artifacts
 

@@ -38,7 +38,7 @@ public final class OnSqExample {
     System.out.println("Sorted array, linear check: " + SortChecker.isSortedLinear(sortedNumbers));
   }
 
-  /** Utility for quadratic-order sortedness checks. */
+  /** Utility for quadratic vs linear sorted-ness checks. */
   private static final class SortChecker {
 
     // O(n^2) double loop: compares every pair.
