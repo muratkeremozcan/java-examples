@@ -24,7 +24,7 @@ jobs:
         run: ./gradlew compileJava
 
       - name: Run tests
-        run: ./gradlew test
+        run: make test
 
       - name: Check code formatting
         run: make format

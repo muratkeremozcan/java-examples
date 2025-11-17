@@ -14,7 +14,7 @@ build:
 	./gradlew build -x test
 
 test:
-	./gradlew test
+	./scripts/run-tests.sh
 
 package:
 	./gradlew bootJar
@@ -145,5 +145,4 @@ health:
 
 stop:
 	pkill -f 'org.springframework.boot' || pkill -f 'JarLauncher' || true
-
 
