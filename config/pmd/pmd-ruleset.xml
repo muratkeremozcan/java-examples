@@ -21,6 +21,7 @@
         <!-- Allow short variable names for simple examples -->
         <exclude name="ShortVariable"/>
         <exclude name="LongVariable"/>
+        <exclude name="TooManyStaticImports"/>
         <!-- Allow class naming without package prefix -->
         <exclude name="ClassNamingConventions"/>
         <!-- Allow single character variable names in loops -->
