@@ -28,7 +28,7 @@ public class IntegrationTestExample {
       // here Exchange app uses the ECB server to get the exchange rate; hence the integration test
       EuropeanCentralBankServer bank = new EuropeanCentralBankServer();
       ExchangeApp exchangeApp = new ExchangeApp(bank);
-      
+
       double euroAmount = 100;
       double tryAmount = exchangeApp.convertEuroTo(euroAmount, "TRY");
 
@@ -59,8 +59,8 @@ public class IntegrationTestExample {
       EuropeanCentralBankServer mockedBank = mock(EuropeanCentralBankServer.class);
       ExchangeApp exchangeApp = new ExchangeApp(mockedBank);
       // stub the mock to return a fixed rate
-      when(mockedBank.getRateEuroTo("TST")).thenReturn(123.45); 
-      
+      when(mockedBank.getRateEuroTo("TST")).thenReturn(123.45);
+
       double euroAmount = 100;
       double tstAmount = exchangeApp.convertEuroTo(euroAmount, "TST");
 
@@ -71,16 +71,17 @@ public class IntegrationTestExample {
     // mock an exception scenario
     @Test
     void convertEuroTo_throwsException_whenBankUnavailable() {
-        EuropeanCentralBankServer mockedBank = mock(EuropeanCentralBankServer.class);
-        ExchangeApp exchangeApp = new ExchangeApp(mockedBank);
-        // stub the mock to throw an exception
-        when(mockedBank.getRateEuroTo("TST")).thenThrow(new RuntimeException("Bank server is unavailable."));
-        
-        double euroAmount = 450;
-        double tstAmount = exchangeApp.convertEuroTo(euroAmount, "TST");
+      EuropeanCentralBankServer mockedBank = mock(EuropeanCentralBankServer.class);
+      ExchangeApp exchangeApp = new ExchangeApp(mockedBank);
+      // stub the mock to throw an exception
+      when(mockedBank.getRateEuroTo("TST"))
+          .thenThrow(new RuntimeException("Bank server is unavailable."));
 
-        // Assert on the return value of the method
-        assertEquals(-1.0, tstAmount, "Should return -1 when bank is unavailable");
+      double euroAmount = 450;
+      double tstAmount = exchangeApp.convertEuroTo(euroAmount, "TST");
+
+      // Assert on the return value of the method
+      assertEquals(-1.0, tstAmount, "Should return -1 when bank is unavailable");
     }
   }
 }
