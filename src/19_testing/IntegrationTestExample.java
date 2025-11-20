@@ -1,6 +1,8 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import integration.forex.EuropeanCentralBankServer;
 import integration.forex.ExchangeApp;
@@ -47,6 +49,39 @@ public class IntegrationTestExample {
           "Currency not in ECB list: Invalid Currency",
           ex.getMessage(),
           "Exception should mention the missing currency");
+    }
+
+    // mocking example
+    @Test
+    void convertEuroTo_convertsTST_usingMock() {
+      // Mock the ECB server to return a fixed rate for TST
+      // This isolates the test from network dependencies and ECB server availability
+      EuropeanCentralBankServer mockedBank = mock(EuropeanCentralBankServer.class);
+      ExchangeApp exchangeApp = new ExchangeApp(mockedBank);
+      // stub the mock to return a fixed rate
+      when(mockedBank.getRateEuroTo("TST")).thenReturn(123.45);
+
+      double euroAmount = 100;
+      double tstAmount = exchangeApp.convertEuroTo(euroAmount, "TST");
+
+      System.out.println("Converted " + euroAmount + " EUR to " + tstAmount + " TST using a mock.");
+      assertEquals(12_345.0, tstAmount, "Mocked conversion should match stubbed rate");
+    }
+
+    // mock an exception scenario
+    @Test
+    void convertEuroTo_throwsException_whenBankUnavailable() {
+      EuropeanCentralBankServer mockedBank = mock(EuropeanCentralBankServer.class);
+      ExchangeApp exchangeApp = new ExchangeApp(mockedBank);
+      // stub the mock to throw an exception
+      when(mockedBank.getRateEuroTo("TST"))
+          .thenThrow(new RuntimeException("Bank server is unavailable."));
+
+      double euroAmount = 450;
+      double tstAmount = exchangeApp.convertEuroTo(euroAmount, "TST");
+
+      // Assert on the return value of the method
+      assertEquals(-1.0, tstAmount, "Should return -1 when bank is unavailable");
     }
   }
 }
