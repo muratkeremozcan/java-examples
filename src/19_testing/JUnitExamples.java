@@ -1,6 +1,10 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import testing.support.TestLauncher;
 
 /*
@@ -45,6 +49,25 @@ public class JUnitExamples {
       final int actual = LastDigit.lastDigit(number);
 
       // assert
+      assertEquals(expected, actual, "Returns the last digit");
+    }
+
+    // same thing with ValueSource
+    /**
+     * `@ValueSource` supplies a single argument, so we check a common invariant (result is 0-9).
+     */
+    @ParameterizedTest(name = "Digit of ''{0}'' should be between 0 and 9")
+    @ValueSource(ints = {2025, -123, 0})
+    void testLastDigitParameterizedValueSource(final int number) {
+      final int actual = LastDigit.lastDigit(number);
+      assertTrue(actual >= 0 && actual <= 9, "Last digit must stay within 0-9");
+    }
+
+    /** `@CsvSource` lets us pass multiple arguments (input + expected output). */
+    @ParameterizedTest(name = "Last digit of ''{0}'' is ''{1}''")
+    @CsvSource({"2025, 5", "-123, 3", "0, 0"})
+    void testLastDigitParameterized(final int number, final int expected) {
+      final int actual = LastDigit.lastDigit(number);
       assertEquals(expected, actual, "Returns the last digit");
     }
   }
