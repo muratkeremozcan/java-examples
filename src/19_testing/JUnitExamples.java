@@ -1,17 +1,26 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import testing.support.TestLauncher;
 
 /*
  * Quick takeaways: JUnit is the go-to Java testing library, @Test marks discovery, and AAAs keep
- * tests readable.
+ * tests readable. Use @ParameterizedTest with @MethodSource for complex test data, and @BeforeEach
+ * to reduce setup duplication.
  */
-/** Minimal JUnit demo plus CLI tips for running tests with standard tooling. */
+/**
+ * Comprehensive JUnit demo covering: - Basic @Test and AAA pattern. - @ParameterizedTest
+ * with @ValueSource, @CsvSource, and @MethodSource. - Arguments class for passing complex objects
+ * to parameterized tests. - @BeforeEach for shared test setup.
+ */
 @SuppressWarnings("checkstyle:abbreviationaswordinname")
 public class JUnitExamples {
   /** Runs the Datacamp helper and shows the equivalent real-world commands. */
@@ -70,12 +79,90 @@ public class JUnitExamples {
       final int actual = LastDigit.lastDigit(number);
       assertEquals(expected, actual, "Returns the last digit");
     }
+
+    /**
+     * `@MethodSource` points to a static method that provides Arguments objects. Useful for complex
+     * test data or when you need more flexibility than CSV strings.
+     */
+    @ParameterizedTest(name = "Last digit of ''{0}'' is ''{1}''")
+    @MethodSource("getArgs")
+    void testLastDigitWithMethodSource(final int number, final int expected) {
+      final int actual = LastDigit.lastDigit(number);
+      assertEquals(expected, actual, "Returns the last digit");
+    }
+
+    /**
+     * Provider method for @MethodSource. Must be static and return a collection of Arguments.
+     * Arguments.of() wraps multiple values into a single test case.
+     */
+    @SuppressWarnings("PMD.UnusedPrivateMethod") // Used by @MethodSource
+    private static List<Arguments> getArgs() {
+      return List.of(Arguments.of(2025, 5), Arguments.of(-2025, 5), Arguments.of(2020, 0));
+    }
   }
 
   /** Utility holder for digit-related helpers used by the lesson. */
   private static final class LastDigit {
     private static int lastDigit(final int number) {
       return Math.abs(number % 10);
+    }
+  }
+
+  /**
+   * Demonstrates `@BeforeEach` and testing complex objects with `@MethodSource`. The `@BeforeEach`
+   * method runs before each test, reducing duplication when multiple tests share setup logic.
+   */
+  /* default */ static class PersonTest {
+    // Shared fields for all tests (initialized in @BeforeEach)
+    private Person alice;
+    private Person bob;
+
+    /** Sets up test data before each test method runs. */
+    @BeforeEach
+    void setUp() {
+      alice = new Person("Alice", "Smith");
+      bob = new Person("Bob", "Jones");
+    }
+
+    /** Simple test using the shared Person objects from @BeforeEach. */
+    @Test
+    void testFullNameFromBeforeEach() {
+      assertEquals("Alice Smith", alice.fullName(), "Alice's full name");
+    }
+
+    /** Another test using the shared Person objects from @BeforeEach. */
+    @Test
+    void testFullNameFromBeforeEachForBob() {
+      assertEquals("Bob Jones", bob.fullName(), "Bob's full name");
+    }
+
+    /**
+     * Parameterized test with complex objects. Each Arguments contains a Person and the expected
+     * full name String.
+     */
+    @ParameterizedTest(name = "{0} should have full name ''{1}''")
+    @MethodSource("personProvider")
+    void testFullNameParameterized(final Person person, final String expectedFullName) {
+      assertEquals(expectedFullName, person.fullName(), "Full name should match");
+    }
+
+    /**
+     * Provider method supplying Person objects and their expected full names. Demonstrates how
+     * Arguments can hold any object types.
+     */
+    @SuppressWarnings("PMD.UnusedPrivateMethod") // Used by @MethodSource
+    private static List<Arguments> personProvider() {
+      return List.of(
+          Arguments.of(new Person("Alice", "Smith"), "Alice Smith"),
+          Arguments.of(new Person("Bob", "Jones"), "Bob Jones"),
+          Arguments.of(new Person("Charlie", "Brown"), "Charlie Brown"));
+    }
+  }
+
+  /** Simple Person record for demonstrating object-based parameterized tests. */
+  private record Person(String firstName, String lastName) {
+    /* default */ String fullName() {
+      return firstName + " " + lastName;
     }
   }
 }
